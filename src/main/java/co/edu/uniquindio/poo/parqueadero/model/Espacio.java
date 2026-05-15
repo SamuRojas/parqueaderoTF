@@ -8,8 +8,14 @@ public class Espacio {
     //Relaciones
     private Vehiculo theVehiculo;
 
-    //Constructor
-    public Espacio ( String codigo){
+    /**
+     *contructor de la clase Espacio
+     * @param codigo del Espacio
+     * @param tipoEspacio del Espacio
+     * @param estadoEspacio del Espacio
+     *
+     */
+    public Espacio ( String codigo, TipoEspacio tipoEspacio, EstadoEspacio estadoEspacio){
         this.codigo = codigo;
         this.tipoEspacio = tipoEspacio;
         this.estadoEspacio = estadoEspacio;
