@@ -14,7 +14,7 @@ public class LoginApplication extends Application {
         FXMLLoader loader =
                 new FXMLLoader(
                         getClass().getResource(
-                                "/view/Login.fxml"
+                                "/co.edu.uniquindio.poo.parqueadero/Login.fxml"
                         )
                 );
 

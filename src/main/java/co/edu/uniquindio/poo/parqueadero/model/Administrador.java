@@ -21,4 +21,6 @@ public class Administrador extends Persona implements IAutenticable {
 
     public String getContraseña() {return contraseña;}
     public String getUsuario() {return usuario;}
+
+
 }

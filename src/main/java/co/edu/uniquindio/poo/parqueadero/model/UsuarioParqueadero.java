@@ -11,10 +11,13 @@ public class UsuarioParqueadero extends Persona {
         this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;
     }
 
+
+
+
+
     public TipoUsuarioParqueadero getTipoUsuarioParqueadero() {
         return tipoUsuarioParqueadero;
     }
-
     public void setTipoUsuarioParqueadero(TipoUsuarioParqueadero tipoUsuarioParqueadero) {
         this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;
     }
