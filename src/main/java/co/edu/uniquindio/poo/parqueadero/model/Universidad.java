@@ -2,16 +2,16 @@ package co.edu.uniquindio.poo.parqueadero.model;
 
 import java.util.List;
 
-public class universidad {
+public class Universidad {
     //Atributos
     private String nombre, direccion, nit;
 
     //Relaciones
 
-    private List<parqueadero> listParqueaderosUniversidad;
+    private List<Parqueadero> listParqueaderosUniversidad;
 
     //Contructor
-    public parqueadero ( String nombre, String direcciom, String nit){
+    public Universidad(String nombre, String direcciom, String nit){
 
     }
 }

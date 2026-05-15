@@ -1,5 +1,5 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public enum estadoEspacio {
+public enum EstadoEspacio {
     DISPONIBLE, OCUPADO, FUERADESERVICIO;
 }

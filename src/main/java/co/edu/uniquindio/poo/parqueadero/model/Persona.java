@@ -2,16 +2,16 @@ package co.edu.uniquindio.poo.parqueadero.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class persona {
+public abstract class Persona {
 
     //atributos
     private String nombre, identificacion, telefono,correo;
 
     //Relaciones
 
-    private List<vehiculo> listVehiculosDePersona;
-    private List<administrador> listAdministradores;
-    private List<operador> listOperadores;
+    private List<Vehiculo> listVehiculosDePersona;
+    private List<Administrador> listAdministradores;
+    private List<Operador> listOperadores;
 
    /**
    *contructor de la clase persona
@@ -21,7 +21,7 @@ public abstract class persona {
    * @param correo de la persona
    */
 
-   public persona ( String nombre, String identificacion, String telefono, String correo){
+   public Persona(String nombre, String identificacion, String telefono, String correo){
       this.nombre = nombre;
       this.identificacion = identificacion;
       this.telefono = telefono;

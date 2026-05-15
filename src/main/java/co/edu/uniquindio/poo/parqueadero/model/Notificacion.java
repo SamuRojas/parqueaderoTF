@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public enum estadoVehiculo {
-    DENTRO, FUERA;
+public class Notificacion implements IReporte {
+
+
 }

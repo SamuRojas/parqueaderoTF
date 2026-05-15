@@ -1,4 +1,5 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public class administrador {
+public enum EstadoVehiculo {
+    DENTRO, FUERA;
 }

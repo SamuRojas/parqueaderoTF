@@ -1,5 +1,5 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public enum tipoParqueadero {
+public enum TipoVehiculo {
     CARRO, MOTO, BICICLETA;
 }

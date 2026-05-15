@@ -1,5 +1,5 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public enum tipoUsuarioParqueadero {
+public enum TipoUsuarioParqueadero {
     ESTUDIANTE, DOCENTE, ADMINISTRADOR, VISITANTE;
 }

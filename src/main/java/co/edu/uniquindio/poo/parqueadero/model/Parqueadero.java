@@ -1,4 +1,4 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public class espacios {
+public class Parqueadero {
 }

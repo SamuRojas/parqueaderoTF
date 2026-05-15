@@ -1,4 +1,4 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-public class reporteDiario {
+public class UsuarioParqueadero {
 }
