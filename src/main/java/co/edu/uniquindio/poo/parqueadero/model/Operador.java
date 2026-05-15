@@ -19,4 +19,3 @@ public class Operador extends Persona implements IAutenticable {
 
 }
 
-}

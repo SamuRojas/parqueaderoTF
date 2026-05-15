@@ -11,7 +11,6 @@ public class Administrador extends Persona implements IAutenticable {
     @Override
     public boolean logIn(String usuario, String Contraseña) {
 
-        if ()
         return false;
     }
 
