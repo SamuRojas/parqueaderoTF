@@ -1,14 +1,15 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Vehiculo {
     //Atributos
     private String placa, nombreConductor, identificacionConductor;
     private EstadoVehiculo estadoVehiculo;
-    private LocalDateTime horaIngreso;
-    private LocalDateTime horaSalida;
+    private LocalTime horaIngreso;
+    private LocalTime horaSalida;
     private TipoVehiculo tipoVehiculo;
 
     //Relaciones
@@ -19,13 +20,16 @@ public class Vehiculo {
 
     //Constructor
 
-    public Vehiculo (String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, TipoVehiculo tipoVehiculo, LocalDateTime horaIngreso, LocalDateTime horaSalida, Persona personaDelVehiculo, Espacio espacioDelVehiculo){
+    public Vehiculo (String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, TipoVehiculo tipoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, Persona personaDelVehiculo, Espacio espacioDelVehiculo){
         this.placa = placa;
         this.nombreConductor = nombreConductor;
         this.identificacionConductor = identificacionConductor;
 
         this.estadoVehiculo = estadoVehiculo;
         this.tipoVehiculo = tipoVehiculo;
+
+        this.horaIngreso = LocalTime.now();
+        this.horaSalida = LocalTime.now();
 
         this.thePersonaDelVehiculo = personaDelVehiculo;
         this.theEspacioDelVehiculo = espacioDelVehiculo;
@@ -48,11 +52,11 @@ public class Vehiculo {
         return estadoVehiculo;
     }
 
-    public LocalDateTime getHoraIngreso() {
+    public LocalTime getHoraIngreso() {
         return horaIngreso;
     }
 
-    public LocalDateTime getHoraSalida() {
+    public LocalTime getHoraSalida() {
         return horaSalida;
     }
 
@@ -88,11 +92,9 @@ public class Vehiculo {
         this.estadoVehiculo = estadoVehiculo;
     }
 
-    public void setHoraIngreso(LocalDateTime horaIngreso) {
-        this.horaIngreso = horaIngreso;
-    }
+    public void setHoraIngreso(LocalTime horaIngreso) {this.horaIngreso = horaIngreso;}
 
-    public void setHoraSalida(LocalDateTime horaSalida) {
+    public void setHoraSalida(LocalTime horaSalida) {
         this.horaSalida = horaSalida;
     }
 

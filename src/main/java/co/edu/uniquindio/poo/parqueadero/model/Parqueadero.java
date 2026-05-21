@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +18,12 @@ public class Parqueadero {
     private List<Registro> listRegistros;
     private List<Tarifa> listTarifas;
     private List<Vehiculo> listVehiculos;
-    private List <Persona> listPersonas;
+    private List <UsuarioParqueadero> listUsuariosParqueaderos;
 
     /**
      *contructor de la clase Parqueadero
      * @param nombre del administrador
-     * @param identificacion del administrador
-     * @param telefono del administrador
-     * @param correo del administrador
+     * @param capacidadTotal del parqueadero
      */
 
     public Parqueadero ( String nombre, int capacidadTotal, TipoParqueadero tipoParqueadero){
@@ -35,10 +35,46 @@ public class Parqueadero {
         this.listRegistros = new ArrayList<>();
         this.listTarifas = new ArrayList<>();
         this.listVehiculos = new ArrayList<>();
-        this.listPersonas = new ArrayList<>();
+        this.listUsuariosParqueaderos = new ArrayList<>();
     }
 
-//----------------------------------CRUD PARQUEADERO -----------------------
+     public boolean buscarVehiculo (String placa) {
+         boolean existe = false;
+         for (Vehiculo vh : listVehiculos) {
+             if (vh.getPlaca().equals(placa)) {
+                 existe = true;
+                 break;
+             }
+         }
+         return existe;
+     }
+
+     public String RegistrarNuevoVehiculo(String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, TipoVehiculo tipoVehiculo){
+        String respuesta = "";
+        if(buscarVehiculo(placa)) {
+            respuesta = "el vehiculo ya existe";
+        }else{
+            Vehiculo vehiculoNuevo = new Vehiculo(placa, nombreConductor, identificacionConductor, tipoVehiculo, estadoVehiculo, horaIngreso, horaSalida);
+            listVehiculos.add(vehiculoNuevo);
+
+            respuesta = "el vehiculo con la placa: "+vehiculoNuevo.getPlaca() + "se ah registrado con exito y listo para asignarle un espacio";
+        }
+        return respuesta;
+    }
+
+
+
+     public String obtenerVehiculo (String placa){
+        String infoVehiculo = "";
+
+        if(buscarVehiculo(placa) && EstadoVehiculo == EstadoVehiculo.DENTRO){
+
+
+
+        }
+        return infoVehiculo;
+      }
+
 
      public String registrarIngreso(String placa, TipoVehiculo tipoVehiculo, String nombreConductor, String id){
       return  "";
@@ -72,9 +108,7 @@ public class Parqueadero {
          return "";
      }
 
-     public String buscarVehiculo ( String placa ){
-         return "";
-     }
+
 
 
 
@@ -98,7 +132,9 @@ public class Parqueadero {
 
     public List<Vehiculo> getListVehiculos() {return listVehiculos;}
 
-    public List<Persona> getListPersonas() {return listPersonas;}
+    public List<UsuarioParqueadero> getListUsuariosParqueaderos() {
+        return listUsuariosParqueaderos;
+    }
 
     public void setNombre(String nombre) {this.nombre = nombre;}
 
@@ -114,7 +150,9 @@ public class Parqueadero {
 
     public void setListVehiculos(List<Vehiculo> listVehiculos) {this.listVehiculos = listVehiculos;}
 
-    public void setListPersonas(List<Persona> listPersonas) {this.listPersonas = listPersonas;}
+    public void setListUsuariosParqueaderos(List<UsuarioParqueadero> listUsuariosParqueaderos) {
+        this.listUsuariosParqueaderos = listUsuariosParqueaderos;
+    }
 
     @Override
     public String toString() {
@@ -126,7 +164,7 @@ public class Parqueadero {
                 ", listRegistros=" + listRegistros +
                 ", listTarifas=" + listTarifas +
                 ", listVehiculos=" + listVehiculos +
-                ", listPersonas=" + listPersonas +
+                ", listPersonas=" + listUsuariosParqueaderos +
                 '}';
     }
 }

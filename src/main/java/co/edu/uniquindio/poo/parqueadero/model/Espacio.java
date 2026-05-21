@@ -1,10 +1,12 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
 public class Espacio {
+
     //Atributos
     private String codigo;
     private TipoEspacio tipoEspacio;
     private EstadoEspacio estadoEspacio;
+
     //Relaciones
     private Vehiculo theVehiculo;
 
