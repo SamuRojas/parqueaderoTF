@@ -7,6 +7,11 @@ public interface IAutenticable {
      */
 
     boolean logIn(String usuario, String Contraseña);
+
+    /**
+     *Metodo Abstracto que permite hacer log off
+     */
+
     void logOff();
 
 }

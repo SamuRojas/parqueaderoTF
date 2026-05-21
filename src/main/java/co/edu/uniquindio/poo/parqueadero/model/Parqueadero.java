@@ -4,16 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parqueadero {
+
+    //Atributos
     private String nombre;
     private int capacidadTotal;
     private TipoParqueadero tipoParqueadero;
 
+    //Relaciones
 
     private List<Espacio> listEspacios;
     private List<Registro> listRegistros;
     private List<Tarifa> listTarifas;
     private List<Vehiculo> listVehiculos;
     private List <Persona> listPersonas;
+
+    /**
+     *contructor de la clase Parqueadero
+     * @param nombre del administrador
+     * @param identificacion del administrador
+     * @param telefono del administrador
+     * @param correo del administrador
+     */
 
     public Parqueadero ( String nombre, int capacidadTotal, TipoParqueadero tipoParqueadero){
         this.nombre = nombre;
