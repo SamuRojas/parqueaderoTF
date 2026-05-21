@@ -191,6 +191,47 @@ public class Parqueadero {
         return respuesta;
     }
 
+    public UsuarioParqueadero obtenerUsuarioParqueadero(String identificacion){
+        UsuarioParqueadero encontrado = null;
+        for(UsuarioParqueadero usuario: listUsuariosParqueaderos){
+            if(usuario.getIdentificacion().equals(identificacion)){
+                encontrado = usuario;
+                break;
+            }
+        }
+        return encontrado;
+    }
+
+
+    public String actualizarInfoUsuarioParqueadero(String nuevoNombre, String identificacion, String nuevoTelefono, String nuevoCorreo, TipoUsuarioParqueadero nuevoTipoUsuarioParqueadero){
+        String respuesta;
+        UsuarioParqueadero up = obtenerUsuarioParqueadero(identificacion);
+        if( up == null){
+            respuesta = "Usuario no encontrado";
+        }else{
+            up.setNombre(nuevoNombre);
+            up.setTelefono(nuevoTelefono);
+            up.setCorreo(nuevoCorreo);
+            up.setTipoUsuarioParqueadero(nuevoTipoUsuarioParqueadero);
+            respuesta = "Usuario actualizado correctamente";
+        }
+        return respuesta;
+    }
+
+    public String eliminarUsuario(String identificacion){
+        String respuesta;
+        UsuarioParqueadero up = obtenerUsuarioParqueadero(identificacion);
+        if(up == null){
+            respuesta = "Cliente no encontrado";
+        }else{
+            listUsuariosParqueaderos.remove(up);
+            respuesta = "Usuario eliminado correctamente";
+        }
+        return respuesta;
+    }
+
+    //---------------------------------CRUD TARIFA----------------------------------------------------------------------------------
+
 
 
 
