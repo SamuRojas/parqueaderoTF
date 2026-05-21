@@ -9,7 +9,6 @@ public abstract class Persona {
 
     //Relaciones
 
-    private List<Vehiculo> listVehiculosDePersona;
     private List<Administrador> listAdministradores;
     private List<Operador> listOperadores;
 
@@ -27,7 +26,6 @@ public abstract class Persona {
       this.telefono = telefono;
       this.correo = correo;
 
-      this.listVehiculosDePersona = new ArrayList<>();
       this.listAdministradores = new ArrayList<>();
       this.listOperadores = new ArrayList<>();
    }
@@ -53,7 +51,6 @@ public abstract class Persona {
                 ", identificacion='" + identificacion + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", correo='" + correo + '\'' +
-                ", listVehiculosDePersona=" + listVehiculosDePersona +
                 ", listAdministradores=" + listAdministradores +
                 ", listOperadores=" + listOperadores +
                 '}';

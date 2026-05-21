@@ -14,13 +14,13 @@ public class Vehiculo {
 
     //Relaciones
 
-    private Persona thePersonaDelVehiculo;
+    private UsuarioParqueadero theUsuarioDelVehiculo;
     private Espacio theEspacioDelVehiculo;
     private List<Registro> listRegistroDelVehiculo;
 
     //Constructor
 
-    public Vehiculo (String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, TipoVehiculo tipoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, Persona personaDelVehiculo, Espacio espacioDelVehiculo){
+    public Vehiculo (String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, TipoVehiculo tipoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, UsuarioParqueadero usuarioDelVehiculo, Espacio espacioDelVehiculo){
         this.placa = placa;
         this.nombreConductor = nombreConductor;
         this.identificacionConductor = identificacionConductor;
@@ -31,7 +31,7 @@ public class Vehiculo {
         this.horaIngreso = LocalTime.now();
         this.horaSalida = LocalTime.now();
 
-        this.thePersonaDelVehiculo = personaDelVehiculo;
+        this.theUsuarioDelVehiculo = usuarioDelVehiculo;
         this.theEspacioDelVehiculo = espacioDelVehiculo;
 
     }
@@ -64,8 +64,8 @@ public class Vehiculo {
         return tipoVehiculo;
     }
 
-    public Persona getThePersonaDelVehiculo() {
-        return thePersonaDelVehiculo;
+    public UsuarioParqueadero getTheUsuarioDelVehiculo() {
+        return theUsuarioDelVehiculo;
     }
 
     public Espacio getTheEspacioDelVehiculo() {
@@ -100,7 +100,7 @@ public class Vehiculo {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    public void setThePersonaDelVehiculo(Persona thePersonaDelVehiculo) {this.thePersonaDelVehiculo = thePersonaDelVehiculo;}
+    public void setTheUsuarioDelVehiculo(UsuarioParqueadero theUsuarioDelVehiculo) {this.theUsuarioDelVehiculo = theUsuarioDelVehiculo;}
 
     public void setTheEspacioDelVehiculo(Espacio theEspacioDelVehiculo) {this.theEspacioDelVehiculo = theEspacioDelVehiculo;}
 
@@ -116,7 +116,7 @@ public class Vehiculo {
                 ", horaIngreso=" + horaIngreso +
                 ", horaSalida=" + horaSalida +
                 ", tipoVehiculo=" + tipoVehiculo +
-                ", thePersonaDelVehiculo=" + thePersonaDelVehiculo +
+                ", thePersonaDelVehiculo=" + theUsuarioDelVehiculo +
                 ", theEspacioDelVehiculo=" + theEspacioDelVehiculo +
                 ", listRegistroDelVehiculo=" + listRegistroDelVehiculo +
                 '}';
