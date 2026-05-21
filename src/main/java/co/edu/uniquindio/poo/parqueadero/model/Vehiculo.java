@@ -84,9 +84,7 @@ public class Vehiculo {
         this.nombreConductor = nombreConductor;
     }
 
-    public void setIdentificacionConductor(String identificacionConductor) {
-        this.identificacionConductor = identificacionConductor;
-    }
+    public void setIdentificacionConductor(String identificacionConductor) {this.identificacionConductor = identificacionConductor;}
 
     public void setEstadoVehiculo(EstadoVehiculo estadoVehiculo) {
         this.estadoVehiculo = estadoVehiculo;
@@ -102,17 +100,11 @@ public class Vehiculo {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    public void setThePersonaDelVehiculo(Persona thePersonaDelVehiculo) {
-        this.thePersonaDelVehiculo = thePersonaDelVehiculo;
-    }
+    public void setThePersonaDelVehiculo(Persona thePersonaDelVehiculo) {this.thePersonaDelVehiculo = thePersonaDelVehiculo;}
 
-    public void setTheEspacioDelVehiculo(Espacio theEspacioDelVehiculo) {
-        this.theEspacioDelVehiculo = theEspacioDelVehiculo;
-    }
+    public void setTheEspacioDelVehiculo(Espacio theEspacioDelVehiculo) {this.theEspacioDelVehiculo = theEspacioDelVehiculo;}
 
-    public void setListRegistroDelVehiculo(List<Registro> listRegistroDelVehiculo) {
-        this.listRegistroDelVehiculo = listRegistroDelVehiculo;
-    }
+    public void setListRegistroDelVehiculo(List<Registro> listRegistroDelVehiculo) {this.listRegistroDelVehiculo = listRegistroDelVehiculo;}
 
     @Override
     public String toString() {

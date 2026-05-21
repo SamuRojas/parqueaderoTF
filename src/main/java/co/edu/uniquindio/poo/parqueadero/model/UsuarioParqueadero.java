@@ -6,7 +6,7 @@ public class UsuarioParqueadero extends Persona {
 
     //Constructor
 
-    public UsuarioParqueadero(String nombre, String identificacion, String telefono, String correo) {
+    public UsuarioParqueadero(String nombre, String identificacion, String telefono, String correo, TipoUsuarioParqueadero tipoUsuarioParqueadero) {
         super(nombre, identificacion, telefono, correo);
         this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;
     }
@@ -18,7 +18,5 @@ public class UsuarioParqueadero extends Persona {
     public TipoUsuarioParqueadero getTipoUsuarioParqueadero() {
         return tipoUsuarioParqueadero;
     }
-    public void setTipoUsuarioParqueadero(TipoUsuarioParqueadero tipoUsuarioParqueadero) {
-        this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;
-    }
+    public void setTipoUsuarioParqueadero(TipoUsuarioParqueadero tipoUsuarioParqueadero) {this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;}
 }

@@ -38,6 +38,75 @@ public class Parqueadero {
         this.listUsuariosParqueaderos = new ArrayList<>();
     }
 
+
+    //-----------------------------CRUD ESPACIO------------------------------------------------------------------------------------------------------------------
+    public boolean buscarEspacio(String codigo){
+        boolean existe = false;
+        for(Espacio espacio : listEspacios){
+            if(espacio.getCodigo().equals(codigo)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public String agregarEspacio(String codigo, TipoEspacio tipoEspacio, EstadoEspacio estadoEspacio){
+        String respuesta = "";
+        if(buscarEspacio(codigo)){
+            respuesta = " un espacio con este codigo ya existe ";
+        }else{
+            Espacio espacioNuevo = new Espacio(codigo, tipoEspacio, estadoEspacio);
+            listEspacios.add(espacioNuevo);
+            respuesta = "el espacio con el codigo " + espacioNuevo.getCodigo()+"se ah registrado correctamente;";
+        }
+        return respuesta;
+    }
+
+
+    public List<Espacio> consultarEspaciosDisponibles(EstadoEspacio estadoEspacio, TipoEspacio tipoEspacio){
+        List<Espacio> espaciosDisponibles = new ArrayList<>();
+        for(Espacio ep : listEspacios){
+            if(ep.getEstadoEspacio()== EstadoEspacio.DISPONIBLE && ep.getTipoEspacio() == tipoEspacio){
+                espaciosDisponibles.add(ep);
+            }
+        }
+            return espaciosDisponibles;
+    }
+
+
+    public Espacio obtenerEspacio(String codigo){
+        Espacio encontrado = null;
+        for(Espacio espacio : listEspacios){
+            if(espacio.getCodigo().equals(codigo)){
+                encontrado =  espacio;
+                break;
+            }
+        }
+        return encontrado;
+    }
+
+
+    public String modoficarEstadoEspacio(String codigo, EstadoEspacio nuevoEstado){
+        String respuesta;
+         Espacio espacio = obtenerEspacio(codigo);
+               if(espacio == null){
+                   respuesta = "Espacio no encontrado ";
+               } else {
+                   EstadoEspacio estadoActual = espacio.getEstadoEspacio();
+                   if (estadoActual == EstadoEspacio.OCUPADO && nuevoEstado == EstadoEspacio.FUERADESERVICIO) {
+                       respuesta = " no se puede deshabilitar un espacio ocupado";
+                   } else {
+                       espacio.setEstadoEspacio(nuevoEstado);
+                       respuesta = " estado cambiado con exito";
+
+                       }
+               }
+        return respuesta;
+    }
+
+    //----------------------------------CRUD VEHICULO -------------------------------------------------------------------------------------------------------------------------------
+
      public boolean buscarVehiculo (String placa) {
          boolean existe = false;
          for (Vehiculo vh : listVehiculos) {
@@ -49,7 +118,8 @@ public class Parqueadero {
          return existe;
      }
 
-     public String RegistrarNuevoVehiculo(String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, TipoVehiculo tipoVehiculo){
+
+     public String registrarNuevoVehiculo(String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, TipoVehiculo tipoVehiculo){
         String respuesta = "";
         if(buscarVehiculo(placa)) {
             respuesta = "el vehiculo ya existe";
@@ -62,18 +132,69 @@ public class Parqueadero {
         return respuesta;
     }
 
-
-
-     public String obtenerVehiculo (String placa){
-        String infoVehiculo = "";
-
-        if(buscarVehiculo(placa) && EstadoVehiculo == EstadoVehiculo.DENTRO){
-
-
-
+    public Vehiculo obtenerVehiculo(String placa){
+        Vehiculo encontrado = null;
+        for(Vehiculo vehiculo : listVehiculos){
+            if(vehiculo.getPlaca().equals(placa)){
+                encontrado = vehiculo;
+                break;
+            }
         }
-        return infoVehiculo;
-      }
+        return encontrado;
+    }
+
+
+    public String RegistrarSalida(String placa){
+        String respuesta;
+           Vehiculo vehiculo = obtenerVehiculo(placa);
+
+        if(vehiculo == null){
+            respuesta = " el vehiculo no existe";
+
+            }else if(vehiculo.getEstadoVehiculo() == EstadoVehiculo.FUERA){
+                 respuesta = " el vehiculo ya salio del parqueadero";
+
+                 }else{
+                       vehiculo.setEstadoVehiculo(EstadoVehiculo.FUERA);
+                            vehiculo.setHoraSalida(LocalTime.now());
+                                 respuesta = "salida registrada con exito";
+                      }
+        return respuesta;
+    }
+
+
+
+
+//-----------------------------CRUD USUARIOPARQUEADERO-----------------------------------------------------------------
+    public boolean buscarUsuarioParqueadero (String identificacion) {
+        boolean existe = false;
+        for (UsuarioParqueadero up : listUsuariosParqueaderos) {
+            if (up.getIdentificacion().equals(identificacion)) {
+               existe = true;
+               break;
+            }
+        }
+        return existe;
+    }
+
+
+    public String registrarNuevoUsuario (String nombre, String identificacion, String telefono, String correo, TipoUsuarioParqueadero tipoUsuarioParqueadero){
+        String respuesta = " ";
+        if(buscarUsuarioParqueadero(identificacion)){
+            respuesta = "El usuario ya fue registrado en el sistema";
+        }else{
+            UsuarioParqueadero nuevoUsuarioParqueadero = new UsuarioParqueadero(nombre, identificacion, telefono, correo, tipoUsuarioParqueadero);
+            listUsuariosParqueaderos.add(nuevoUsuarioParqueadero);
+
+            respuesta = "El usuario" + nuevoUsuarioParqueadero.getNombre() + " se registro correctamente";
+        }
+        return respuesta;
+    }
+
+
+
+
+
 
 
      public String registrarIngreso(String placa, TipoVehiculo tipoVehiculo, String nombreConductor, String id){
@@ -132,9 +253,7 @@ public class Parqueadero {
 
     public List<Vehiculo> getListVehiculos() {return listVehiculos;}
 
-    public List<UsuarioParqueadero> getListUsuariosParqueaderos() {
-        return listUsuariosParqueaderos;
-    }
+    public List<UsuarioParqueadero> getListUsuariosParqueaderos() {return listUsuariosParqueaderos;}
 
     public void setNombre(String nombre) {this.nombre = nombre;}
 
@@ -150,9 +269,7 @@ public class Parqueadero {
 
     public void setListVehiculos(List<Vehiculo> listVehiculos) {this.listVehiculos = listVehiculos;}
 
-    public void setListUsuariosParqueaderos(List<UsuarioParqueadero> listUsuariosParqueaderos) {
-        this.listUsuariosParqueaderos = listUsuariosParqueaderos;
-    }
+    public void setListUsuariosParqueaderos(List<UsuarioParqueadero> listUsuariosParqueaderos) {this.listUsuariosParqueaderos = listUsuariosParqueaderos;}
 
     @Override
     public String toString() {
