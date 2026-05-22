@@ -17,7 +17,7 @@ public class Tarifa {
 
     }
 
-    public double calcularValor (double horas)
+    public double calcularValor (double horas);
 
 
     public TipoVehiculo getTipoVehiculo() {
