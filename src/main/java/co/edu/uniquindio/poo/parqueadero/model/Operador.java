@@ -2,6 +2,8 @@ package co.edu.uniquindio.poo.parqueadero.model;
 
 public class Operador extends Persona implements IAutenticable {
 
+    private final String usuario = "operador";
+    private final String contrasena = "123456";
 
     //Constructor
 
@@ -16,8 +18,14 @@ public class Operador extends Persona implements IAutenticable {
      */
 
     @Override
-    public boolean logIn(String usuario, String Contraseña) {
-        return false;
+    public boolean logIn(String usuarioIngresado, String contrasenaIngresada) {
+        boolean login = false;
+        if (usuarioIngresado != null && contrasenaIngresada != null) {
+            if (usuarioIngresado.trim().equals(usuario) && contrasenaIngresada.trim().equals(contrasena)) {
+                login = true;
+            }
+        }
+        return login;
     }
 
     /**
@@ -29,6 +37,12 @@ public class Operador extends Persona implements IAutenticable {
 
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
 
+    public String getContrasena() {
+        return contrasena;
+    }
 }
 

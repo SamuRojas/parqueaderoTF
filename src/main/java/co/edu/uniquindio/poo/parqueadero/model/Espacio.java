@@ -55,4 +55,14 @@ public class Espacio {
     public void setTipoEspacio(TipoEspacio tipoEspacio) {
         this.tipoEspacio = tipoEspacio;
     }
+
+    @Override
+    public String toString() {
+        return "Espacio{" +
+                "codigo='" + codigo + '\'' +
+                ", tipoEspacio=" + tipoEspacio +
+                ", estadoEspacio=" + estadoEspacio +
+                ", theVehiculo=" + theVehiculo +
+                '}';
+    }
 }
