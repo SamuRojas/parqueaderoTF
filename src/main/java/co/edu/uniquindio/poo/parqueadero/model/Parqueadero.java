@@ -1,5 +1,10 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
+import co.edu.uniquindio.poo.parqueadero.exception.EspacioNoDisponibleException;
+import co.edu.uniquindio.poo.parqueadero.exception.PlacaDuplicadaException;
+import co.edu.uniquindio.poo.parqueadero.exception.VehiculoNoEncontradoException;
+import co.edu.uniquindio.poo.parqueadero.exception.VehiculoNoIngresoException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -221,9 +226,9 @@ public class Parqueadero {
         String respuesta;
            Vehiculo vehiculo = obtenerVehiculo(placa);
         if(vehiculo == null){
-            respuesta = " el vehiculo no existe";
+            throw new VehiculoNoEncontradoException(placa);
             }else if(vehiculo.getEstadoVehiculo() == EstadoVehiculo.FUERA){
-                 respuesta = " el vehiculo ya salio del parqueadero";
+                 throw new VehiculoNoIngresoException(placa);
                  }else{
                        vehiculo.setEstadoVehiculo(EstadoVehiculo.FUERA);
                             vehiculo.setHoraSalida(LocalTime.now());
@@ -274,8 +279,8 @@ public class Parqueadero {
     public String asignarEspacioPorPlaca(String placa, String codigoEspacio){
         String respuesta = "";
         Vehiculo vehiculo = obtenerVehiculo(placa);
-        if(vehiculo == null){
-            respuesta = "Vehiculo no encontrado";
+        if(vehiculo == null) {
+         throw new VehiculoNoEncontradoException(placa);
         } else {
             Espacio espacio = obtenerEspacio(codigoEspacio);
             if(espacio == null){
@@ -303,11 +308,11 @@ public class Parqueadero {
     public String registrarIngreso(String placa, String nombreConductor, String identificacionConductor, TipoVehiculo tipoVehiculo){
         String respuesta = "";
         if(vehiculoDentro(placa)){
-            respuesta = "Ya existe un vehiculo dentro con esta placa";
+            throw new PlacaDuplicadaException(placa);
         } else {
             Espacio espacio = buscarEspacioParaIngreso(tipoVehiculo);
             if(espacio == null){
-                respuesta = "No hay espacios disponibles";
+               throw new EspacioNoDisponibleException();
             } else {
                 Vehiculo vehiculo = obtenerVehiculo(placa);
                 LocalTime horaIngreso = LocalTime.now();
@@ -364,7 +369,7 @@ public class Parqueadero {
         String respuesta = "";
         Vehiculo vehiculo = obtenerVehiculo(placa);
         if(vehiculo == null){
-            respuesta = "Vehiculo no encontrado";
+            throw new VehiculoNoEncontradoException(placa);
         } else {
             respuesta = "PLACA: " + vehiculo.getPlaca()
                             + "\nCONDUCTOR: " + vehiculo.getNombreConductor()
@@ -411,10 +416,10 @@ public class Parqueadero {
         String respuesta = "";
         Vehiculo vehiculo = obtenerVehiculo(placa);
         if(vehiculo == null){
-            respuesta = "Vehiculo no encontrado";
+            throw new VehiculoNoEncontradoException(placa);
         } else {
             if(vehiculo.getEstadoVehiculo() == EstadoVehiculo.FUERA){
-                respuesta = "El vehiculo no esta dentro";
+               throw new VehiculoNoIngresoException(placa);
             } else {
                 LocalTime horaSalida = LocalTime.now();
                 double horas = calcularHoras(vehiculo.getHoraIngreso(), horaSalida);
@@ -491,7 +496,7 @@ public class Parqueadero {
         String respuesta;
         UsuarioParqueadero up = obtenerUsuarioParqueadero(identificacion);
         if(up == null){
-            respuesta = "Cliente no encontrado";
+            respuesta = "Usuario no encontrado";
         }else{
             listUsuariosParqueaderos.remove(up);
             respuesta = "Usuario eliminado correctamente";
@@ -552,9 +557,7 @@ public class Parqueadero {
 
     public ReporteDiario generarReporteDiario(){
 
-        ReporteDiario reporte = new ReporteDiario(
-
-        );
+        ReporteDiario reporte = new ReporteDiario(LocalDate.now());
         for(Registro registro : listRegistros){
             reporte.agregarRegistro(registro
             );
