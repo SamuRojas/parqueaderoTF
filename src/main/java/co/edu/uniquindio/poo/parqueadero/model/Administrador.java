@@ -51,10 +51,15 @@ public class Administrador extends Persona implements IAutenticable {
     public String getContrasena() {
         return contrasena;
     }
-
     public String getUsuario() {
         return usuario;
     }
 
-
+    @Override
+    public String toString() {
+        return "Administrador{" +
+                "usuario='" + usuario + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                '}';
+    }
 }

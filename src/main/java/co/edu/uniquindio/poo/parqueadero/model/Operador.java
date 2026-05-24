@@ -37,12 +37,18 @@ public class Operador extends Persona implements IAutenticable {
 
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
+    public String getUsuario() {return usuario;}
     public String getContrasena() {
         return contrasena;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Operador{" +
+                "usuario='" + usuario + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                '}';
     }
 }
 

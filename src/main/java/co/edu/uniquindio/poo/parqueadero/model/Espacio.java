@@ -24,34 +24,25 @@ public class Espacio {
 
     }
 
-    public Vehiculo getTheVehiculo() {
-        return theVehiculo;
-    }
-
+    public Vehiculo getTheVehiculo() {return theVehiculo;}
     public String getCodigo() {
         return codigo;
     }
-
     public EstadoEspacio getEstadoEspacio() {
         return estadoEspacio;
     }
-
     public TipoEspacio getTipoEspacio() {
         return tipoEspacio;
     }
-
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
     public void setTheVehiculo(Vehiculo theVehiculo) {
         this.theVehiculo = theVehiculo;
     }
-
     public void setEstadoEspacio(EstadoEspacio estadoEspacio) {
         this.estadoEspacio = estadoEspacio;
     }
-
     public void setTipoEspacio(TipoEspacio tipoEspacio) {
         this.tipoEspacio = tipoEspacio;
     }

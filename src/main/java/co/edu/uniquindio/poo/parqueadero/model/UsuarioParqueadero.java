@@ -31,4 +31,12 @@ public class UsuarioParqueadero extends Persona {
         return tipoUsuarioParqueadero;
     }
     public void setTipoUsuarioParqueadero(TipoUsuarioParqueadero tipoUsuarioParqueadero) {this.tipoUsuarioParqueadero = tipoUsuarioParqueadero;}
+
+    @Override
+    public String toString() {
+        return "UsuarioParqueadero{" +
+                "tipoUsuarioParqueadero=" + tipoUsuarioParqueadero +
+                ", listVehiculosDeUsuario=" + listVehiculosDeUsuario +
+                '}';
+    }
 }

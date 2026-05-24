@@ -11,8 +11,7 @@ public class Registro {
     private double valorPagado;
     private double horasEstacionadas;
 
-    public Registro(String placa, LocalDate fecha, LocalTime horaIngreso, LocalTime horaSalida,
-                    double valorPagado, double horasEstacionadas) {
+    public Registro(String placa, LocalDate fecha, LocalTime horaIngreso, LocalTime horaSalida, double valorPagado, double horasEstacionadas) {
         this.placa = placa;
         this.fecha = fecha;
         this.horaIngreso = horaIngreso;
@@ -21,50 +20,42 @@ public class Registro {
         this.horasEstacionadas = horasEstacionadas;
     }
 
+
+
+
     public String getPlaca() {
         return placa;
     }
-
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-
     public LocalDate getFecha() {
         return fecha;
     }
-
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
-
     public LocalTime getHoraIngreso() {
         return horaIngreso;
     }
-
     public void setHoraIngreso(LocalTime horaIngreso) {
         this.horaIngreso = horaIngreso;
     }
-
     public LocalTime getHoraSalida() {
         return horaSalida;
     }
-
     public void setHoraSalida(LocalTime horaSalida) {
         this.horaSalida = horaSalida;
     }
-
     public double getValorPagado() {
         return valorPagado;
     }
-
     public void setValorPagado(double valorPagado) {
         this.valorPagado = valorPagado;
     }
-
     public double getHorasEstacionadas() {
         return horasEstacionadas;
     }
-
     public void setHorasEstacionadas(double horasEstacionadas) {
         this.horasEstacionadas = horasEstacionadas;
     }
