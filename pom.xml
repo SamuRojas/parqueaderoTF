@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                co.edu.uniquindio.poo.parqueadero/co.edu.uniquindio.poo.parqueadero.HelloApplication
+                                co.edu.uniquindio.poo.parqueadero/co.edu.uniquindio.poo.parqueadero.LoginApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
