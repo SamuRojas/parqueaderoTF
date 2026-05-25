@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="680.0" prefWidth="1000.0" styleClass="root"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.parqueadero.controller.OperadorController"
+            stylesheets="@../css/parkuq.css">
+    <top>
+        <HBox styleClass="header-bar-operador" alignment="CENTER_LEFT" spacing="16">
+            <VBox spacing="2">
+                <Label text="PARKUQ" styleClass="header-title"/>
+                <Label text="Módulo operador — entradas, salidas y consultas" styleClass="header-sub"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label text="Universidad del Quindío" styleClass="header-sub"/>
+            <Button fx:id="btnCerrarSesion" onAction="#onCerrarSesion" text="Cerrar sesión" styleClass="btn-white"/>
+        </HBox>
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" style="-fx-padding: 12;">
+            <Tab text="Ingreso">
+                <HBox spacing="20">
+                    <VBox spacing="14" styleClass="card" prefWidth="380">
+                        <Label text="Registrar entrada" styleClass="card-title"/>
+                        <Label text="Placa, conductor, tipo y espacio asignado" styleClass="card-subtitle"/>
+                        <GridPane hgap="10" vgap="12">
+                            <Label text="Placa *" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtPlacaIngreso" promptText="ABC123" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <Label text="Conductor *" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <TextField fx:id="txtNombreConductor" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label text="Identificación *" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <TextField fx:id="txtIdConductor" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Label text="Tipo vehículo *" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <ComboBox fx:id="cmbTipoVehiculo" onAction="#onTipoVehiculoCambio" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="200"/>
+                            <Label text="Espacio *" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                            <HBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <ComboBox fx:id="cmbEspacioIngreso" prefWidth="140"/>
+                                <Button onAction="#onTipoVehiculoCambio" text="↻" styleClass="btn-secondary"/>
+                            </HBox>
+                        </GridPane>
+                        <Button onAction="#onRegistrarIngreso" text="✓ Registrar ingreso" styleClass="btn-success"/>
+                        <Label text="Valida: cupos libres y placa no duplicada" styleClass="card-subtitle"/>
+                    </VBox>
+                    <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="Ayuda rápida" styleClass="card-title"/>
+                        <Label wrapText="true" text="1. Elija el tipo de vehículo y se cargan los espacios disponibles.&#10;2. Si el conductor está registrado como usuario autorizado, aplica descuento.&#10;3. La hora de ingreso se guarda automáticamente al registrar."
+                               styleClass="card-subtitle"/>
+                    </VBox>
+                </HBox>
+            </Tab>
+            <Tab text="Salida y cobro">
+                <HBox spacing="20">
+                    <VBox spacing="14" styleClass="card" prefWidth="320">
+                        <Label text="Registrar salida" styleClass="card-title"/>
+                        <Label text="Calcula tiempo, tarifa y total" styleClass="card-subtitle"/>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Label text="Placa:"/>
+                            <TextField fx:id="txtPlacaSalida" prefWidth="160"/>
+                        </HBox>
+                        <Button onAction="#onSimularSalida" text="Ver cobro antes de salir" styleClass="btn-warning"/>
+                        <Button onAction="#onRegistrarSalida" text="Confirmar salida y cobrar" styleClass="btn-danger"/>
+                    </VBox>
+                    <VBox spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="Detalle: tiempo · tarifa/hora · total a pagar" styleClass="card-title"/>
+                        <TextArea fx:id="txtSimulacionSalida" prefRowCount="14" styleClass="info-panel" VBox.vgrow="ALWAYS"/>
+                    </VBox>
+                </HBox>
+            </Tab>
+            <Tab text="Buscar vehículo">
+                <VBox spacing="14" styleClass="card">
+                    <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Placa:" styleClass="card-title"/>
+                        <TextField fx:id="txtPlacaBuscar" prefWidth="180"/>
+                        <Button onAction="#onBuscarVehiculo" text="Buscar información" styleClass="btn-primary"/>
+                    </HBox>
+                    <TextArea fx:id="txtInfoVehiculo" prefRowCount="16" styleClass="info-panel" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+            <Tab text="Espacios">
+                <VBox spacing="16">
+                    <HBox spacing="16" alignment="CENTER">
+                        <VBox styleClass="stat-box" alignment="CENTER" prefWidth="150">
+                            <Label text="TOTAL" styleClass="stat-label"/>
+                            <Label fx:id="lblTotalEspacios" text="0" styleClass="stat-value"/>
+                        </VBox>
+                        <VBox styleClass="stat-box, stat-box-ocupado" alignment="CENTER" prefWidth="150">
+                            <Label text="OCUPADOS" styleClass="stat-label"/>
+                            <Label fx:id="lblOcupados" text="0" styleClass="stat-value"/>
+                        </VBox>
+                        <VBox styleClass="stat-box, stat-box-libre" alignment="CENTER" prefWidth="150">
+                            <Label text="DISPONIBLES" styleClass="stat-label"/>
+                            <Label fx:id="lblDisponibles" text="0" styleClass="stat-value"/>
+                        </VBox>
+                        <Button onAction="#onVerEspacios" text="Actualizar" styleClass="btn-primary"/>
+                    </HBox>
+                    <TextArea fx:id="txtDetalleEspacios" prefRowCount="14" styleClass="info-panel" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+            <Tab text="Dentro del parqueadero">
+                <VBox spacing="12" styleClass="card">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="Vehículos estacionados (placa · conductor · espacio · hora)" styleClass="card-title"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnActualizarLista" onAction="#onActualizarLista" text="Actualizar" styleClass="btn-secondary"/>
+                    </HBox>
+                    <ListView fx:id="listaVehiculosDentro" prefHeight="340" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+            <Tab text="Reportes">
+                <VBox spacing="14" styleClass="card">
+                    <Label text="Reporte del día" styleClass="card-title"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Horas mínimas (permanencia larga):"/>
+                        <TextField fx:id="txtHorasReporte" prefWidth="70" promptText="2"/>
+                        <Button onAction="#onGenerarReporte" text="Generar reporte" styleClass="btn-primary"/>
+                    </HBox>
+                    <TextArea fx:id="txtReporte" prefRowCount="14" styleClass="info-panel" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+    <bottom>
+        <Label fx:id="lblMensajeOperador" wrapText="true" styleClass="mensaje-bar"/>
+    </bottom>
+</BorderPane>

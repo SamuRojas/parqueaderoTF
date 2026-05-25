@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="560.0" prefWidth="900.0" styleClass="fondo-inicio"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.parqueadero.controller.InicioController"
+            stylesheets="@../css/parkuq.css">
+    <top>
+        <VBox alignment="CENTER" spacing="12">
+            <padding><Insets top="55" bottom="30"/></padding>
+            <Label text="PARKUQ" styleClass="inicio-titulo"/>
+            <Label text="Parqueadero Central · Universidad del Quindío" styleClass="inicio-sub"/>
+            <Label text="Sistema Inteligente de Gestión de Vehículos" styleClass="inicio-sub"/>
+        </VBox>
+    </top>
+    <center>
+        <HBox alignment="CENTER" spacing="40">
+            <VBox alignment="CENTER" spacing="16" styleClass="role-card" prefWidth="280">
+                <Label text="Administrador" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1b4f72;"/>
+                <Label text="Espacios, tarifas y usuarios autorizados" wrapText="true" textAlignment="CENTER"
+                       styleClass="card-subtitle"/>
+                <Button fx:id="btnAdministrador" onAction="#onAdministrador" text="Ingresar al panel"
+                        styleClass="role-btn, role-btn-admin"/>
+            </VBox>
+            <VBox alignment="CENTER" spacing="16" styleClass="role-card" prefWidth="280">
+                <Label text="Operador" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #117a65;"/>
+                <Label text="Ingresos, salidas, consultas y reportes" wrapText="true" textAlignment="CENTER"
+                       styleClass="card-subtitle"/>
+                <Button fx:id="btnOperador" onAction="#onOperador" text="Ingresar al panel"
+                        styleClass="role-btn, role-btn-operador"/>
+            </VBox>
+        </HBox>
+    </center>
+    <bottom>
+        <Label text="Proyecto POO · Gestión de parqueadero" textFill="#d6eaf8" BorderPane.alignment="CENTER">
+            <padding><Insets bottom="25"/></padding>
+        </Label>
+    </bottom>
+</BorderPane>

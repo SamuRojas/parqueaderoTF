@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane prefHeight="500.0" prefWidth="600.0" styleClass="fondo-login"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="co.edu.uniquindio.poo.parqueadero.controller.LoginController"
+           stylesheets="@../css/parkuq.css">
+    <VBox alignment="CENTER" spacing="12" styleClass="login-card">
+        <padding>
+            <Insets top="28" right="32" bottom="28" left="32"/>
+        </padding>
+        <Label text="PARKUQ" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b4f72;"/>
+        <Label fx:id="lblTituloRol" text="Inicio de sesion" styleClass="card-title"/>
+        <Label text="Credenciales del personal autorizado" styleClass="card-subtitle"/>
+        <GridPane hgap="12" vgap="14">
+            <Label text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="txtUsuario" promptText="usuario" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="240"/>
+            <Label text="Contrasena:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <PasswordField fx:id="txtContrasena" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="240"/>
+            <Label fx:id="lblMensaje" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="2" styleClass="mensaje-error"/>
+        </GridPane>
+        <HBox spacing="14" alignment="CENTER">
+            <Button fx:id="btnVolver" onAction="#onVolver" text="Volver" styleClass="btn-secondary"/>
+            <Button fx:id="btnIngresar" defaultButton="true" onAction="#onIngresar" text="Ingresar" styleClass="btn-primary"/>
+        </HBox>
+        <Label wrapText="true" textAlignment="CENTER"
+               text="Admin: SamuelRojas | Operador: operador | Contrasena: 123456"
+               style="-fx-font-size: 10px; -fx-text-fill: #95a5a6;"/>
+    </VBox>
+</StackPane>

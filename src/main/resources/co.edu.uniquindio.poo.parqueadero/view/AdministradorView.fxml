@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="680.0" prefWidth="1000.0" styleClass="root"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.parqueadero.controller.AdministradorController"
+            stylesheets="@../css/parkuq.css">
+    <top>
+        <HBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="16">
+            <VBox spacing="2">
+                <Label text="PARKUQ" styleClass="header-title"/>
+                <Label text="Panel administrador" styleClass="header-sub"/>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnCerrarSesionAdmin" onAction="#onCerrarSesion" text="Cerrar sesion" styleClass="btn-white"/>
+        </HBox>
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Espacios">
+                    <content>
+                        <HBox spacing="20">
+                            <VBox spacing="12" styleClass="card" prefWidth="340">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <Label text="Gestion de espacios" styleClass="card-title"/>
+                                <GridPane hgap="10" vgap="10">
+                                    <Label text="Codigo:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                    <TextField fx:id="txtCodigoEspacio" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                    <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                    <ComboBox fx:id="cmbTipoEspacio" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="180"/>
+                                    <Label text="Estado:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                    <ComboBox fx:id="cmbEstadoEspacio" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="180"/>
+                                </GridPane>
+                                <Button onAction="#onAgregarEspacio" text="Nuevo espacio" styleClass="btn-primary"/>
+                                <Button onAction="#onCargarEspacioSeleccionado" text="Cargar de lista" styleClass="btn-secondary"/>
+                                <Button onAction="#onModificarEspacio" text="Modificar" styleClass="btn-warning"/>
+                                <Button onAction="#onDeshabilitarEspacio" text="Deshabilitar" styleClass="btn-danger"/>
+                            </VBox>
+                            <VBox spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <ListView fx:id="listaEspacios" VBox.vgrow="ALWAYS"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Tab>
+                <Tab text="Tarifas">
+                    <content>
+                        <HBox spacing="20">
+                            <VBox spacing="12" styleClass="card" prefWidth="320">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <Label text="Tarifas por hora" styleClass="card-title"/>
+                                <GridPane hgap="10" vgap="10">
+                                    <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                    <ComboBox fx:id="cmbTipoTarifa" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="160"/>
+                                    <Label text="Valor hora:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                    <TextField fx:id="txtValorHora" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                    <Label text="Descuento %:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                    <TextField fx:id="txtDescuento" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                </GridPane>
+                                <Button onAction="#onAgregarTarifa" text="Agregar" styleClass="btn-primary"/>
+                                <Button onAction="#onActualizarTarifa" text="Actualizar" styleClass="btn-secondary"/>
+                            </VBox>
+                            <VBox spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <ListView fx:id="listaTarifas" VBox.vgrow="ALWAYS"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Tab>
+                <Tab text="Usuarios">
+                    <content>
+                        <HBox spacing="20">
+                            <VBox spacing="12" styleClass="card" prefWidth="360">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <Label text="Usuarios autorizados" styleClass="card-title"/>
+                                <GridPane hgap="10" vgap="8">
+                                    <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                    <TextField fx:id="txtNombreUsuario" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                    <TextField fx:id="txtIdUsuario" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                    <Label text="Telefono:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                    <TextField fx:id="txtTelefonoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                    <Label text="Correo:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                    <TextField fx:id="txtCorreoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                    <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                    <ComboBox fx:id="cmbTipoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="180"/>
+                                </GridPane>
+                                <HBox spacing="8">
+                                    <Button onAction="#onAgregarUsuario" text="Registrar" styleClass="btn-success"/>
+                                    <Button onAction="#onActualizarUsuario" text="Actualizar" styleClass="btn-secondary"/>
+                                    <Button onAction="#onEliminarUsuario" text="Eliminar" styleClass="btn-danger"/>
+                                </HBox>
+                            </VBox>
+                            <VBox spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                                <ListView fx:id="listaUsuarios" VBox.vgrow="ALWAYS"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        <Label fx:id="lblMensajeAdmin" wrapText="true" styleClass="mensaje-bar"/>
+    </bottom>
+</BorderPane>
