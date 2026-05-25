@@ -20,8 +20,7 @@ public class VehiculoTest {
                 LocalTime.now(),
                 null,
                 null,
-                null
-        );
+                null);
 
         assertEquals("ABC123", vehiculo.getPlaca());
         assertEquals("Samuel", vehiculo.getNombreConductor());
@@ -40,14 +39,12 @@ public class VehiculoTest {
                 LocalTime.now(),
                 null,
                 null,
-                null
-        );
+                null);
 
         Espacio espacio = new Espacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
+                EstadoEspacio.DISPONIBLE);
 
         vehiculo.setTheEspacioDelVehiculo(espacio);
 
@@ -66,12 +63,9 @@ public class VehiculoTest {
                 LocalTime.now(),
                 null,
                 null,
-                null
-        );
+                null);
 
         vehiculo.setEstadoVehiculo(EstadoVehiculo.FUERA);
-
-        assertEquals(EstadoVehiculo.FUERA,
-                vehiculo.getEstadoVehiculo());
+        assertEquals(EstadoVehiculo.FUERA, vehiculo.getEstadoVehiculo());
     }
 }

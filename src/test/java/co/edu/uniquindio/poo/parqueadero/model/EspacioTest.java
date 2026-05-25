@@ -14,12 +14,10 @@ public class EspacioTest {
         Espacio espacio = new Espacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
+                EstadoEspacio.DISPONIBLE);
 
         assertEquals("A1", espacio.getCodigo());
-        assertEquals(TipoEspacio.CARRO,
-                espacio.getTipoEspacio());
+        assertEquals(TipoEspacio.CARRO, espacio.getTipoEspacio());
     }
 
     @Test
@@ -28,17 +26,11 @@ public class EspacioTest {
         Espacio espacio = new Espacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
+                EstadoEspacio.DISPONIBLE);
 
-        espacio.setEstadoEspacio(
-                EstadoEspacio.OCUPADO
-        );
+        espacio.setEstadoEspacio(EstadoEspacio.OCUPADO);
 
-        assertEquals(
-                EstadoEspacio.OCUPADO,
-                espacio.getEstadoEspacio()
-        );
+        assertEquals(EstadoEspacio.OCUPADO, espacio.getEstadoEspacio());
     }
 
     @Test
@@ -47,8 +39,7 @@ public class EspacioTest {
         Espacio espacio = new Espacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
+                EstadoEspacio.DISPONIBLE);
 
         Vehiculo vehiculo = new Vehiculo(
                 "ABC123",
@@ -59,11 +50,8 @@ public class EspacioTest {
                 LocalTime.now(),
                 null,
                 null,
-                null
-        );
-
+                null);
         espacio.setTheVehiculo(vehiculo);
-
         assertEquals(vehiculo,
                 espacio.getTheVehiculo());
     }

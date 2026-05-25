@@ -20,11 +20,9 @@ public class ReporteDiarioTest {
                 LocalTime.now(),
                 LocalTime.now(),
                 10000,
-                6
-        );
+                6);
 
         reporte.agregarRegistro(registro);
-
         assertEquals(1, reporte.getTotalIngresos());
     }
 
@@ -39,8 +37,7 @@ public class ReporteDiarioTest {
                 LocalTime.now(),
                 LocalTime.now(),
                 10000,
-                2
-        ));
+                2));
 
         reporte.agregarRegistro(new Registro(
                 "XYZ123",
@@ -48,11 +45,9 @@ public class ReporteDiarioTest {
                 LocalTime.now(),
                 LocalTime.now(),
                 10000,
-                4
-        ));
+                4));
 
         reporte.calcularPromedio();
-
         assertEquals(3, reporte.getTiempoPromedioHoras());
     }
 }

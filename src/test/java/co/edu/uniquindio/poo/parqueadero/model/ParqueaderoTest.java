@@ -17,8 +17,7 @@ public class ParqueaderoTest {
         parqueadero = new Parqueadero(
                 "UQ",
                 100,
-                TipoParqueadero.CARRO
-        );
+                TipoParqueadero.CARRO);
     }
 
     @Test
@@ -27,9 +26,7 @@ public class ParqueaderoTest {
         parqueadero.agregarEspacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
-
+                EstadoEspacio.DISPONIBLE);
         assertTrue(parqueadero.buscarEspacio("A1"));
     }
 
@@ -42,9 +39,7 @@ public class ParqueaderoTest {
                 "123",
                 EstadoVehiculo.DENTRO,
                 LocalTime.now(),
-                TipoVehiculo.CARRO
-        );
-
+                TipoVehiculo.CARRO);
         assertTrue(parqueadero.buscarVehiculo("ABC123"));
     }
 
@@ -56,9 +51,7 @@ public class ParqueaderoTest {
                 "123",
                 "321",
                 "correo@gmail.com",
-                TipoUsuarioParqueadero.ESTUDIANTE
-        );
-
+                TipoUsuarioParqueadero.ESTUDIANTE);
         assertTrue(parqueadero.buscarUsuarioParqueadero("123"));
     }
 
@@ -68,9 +61,7 @@ public class ParqueaderoTest {
         parqueadero.agregarTarifa(
                 TipoVehiculo.CARRO,
                 5000,
-                10
-        );
-
+                10);
         assertTrue(parqueadero.buscarTarifa(TipoVehiculo.CARRO));
     }
 
@@ -79,9 +70,7 @@ public class ParqueaderoTest {
 
         double horas = parqueadero.calcularHoras(
                 LocalTime.of(8,0),
-                LocalTime.of(10,0)
-        );
-
+                LocalTime.of(10,0));
         assertEquals(2, horas);
     }
 
@@ -91,8 +80,7 @@ public class ParqueaderoTest {
         parqueadero.agregarEspacio(
                 "A1",
                 TipoEspacio.CARRO,
-                EstadoEspacio.DISPONIBLE
-        );
+                EstadoEspacio.DISPONIBLE);
 
         parqueadero.registrarNuevoVehiculo(
                 "ABC123",
@@ -100,14 +88,11 @@ public class ParqueaderoTest {
                 "123",
                 EstadoVehiculo.DENTRO,
                 LocalTime.now(),
-                TipoVehiculo.CARRO
-        );
+                TipoVehiculo.CARRO);
 
         String respuesta = parqueadero.asignarEspacioPorPlaca(
                 "ABC123",
-                "A1"
-        );
-
+                "A1");
         assertEquals("Espacio asignado correctamente", respuesta);
     }
 }

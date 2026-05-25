@@ -18,8 +18,7 @@ public class RegistroTest {
                 LocalTime.of(8,0),
                 LocalTime.of(10,0),
                 10000,
-                2
-        );
+                2);
 
         assertEquals("ABC123", registro.getPlaca());
         assertEquals(10000, registro.getValorPagado());
@@ -36,12 +35,9 @@ public class RegistroTest {
                 LocalTime.now(),
                 null,
                 0,
-                0
-        );
+                0);
 
         registro.setValorPagado(15000);
-
-        assertEquals(15000,
-                registro.getValorPagado());
+        assertEquals(15000, registro.getValorPagado());
     }
 }

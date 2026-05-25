@@ -16,8 +16,7 @@ public class UsuarioParqueaderoTest {
                 "123",
                 "321",
                 "correo@gmail.com",
-                TipoUsuarioParqueadero.ESTUDIANTE
-        );
+                TipoUsuarioParqueadero.ESTUDIANTE);
 
         Vehiculo vehiculo = new Vehiculo(
                 "ABC123",
@@ -28,11 +27,9 @@ public class UsuarioParqueaderoTest {
                 LocalTime.now(),
                 null,
                 null,
-                null
-        );
+                null);
 
         usuario.asignarVehiculo(vehiculo);
-
         assertEquals(usuario, vehiculo.getTheUsuarioDelVehiculo());
     }
 }

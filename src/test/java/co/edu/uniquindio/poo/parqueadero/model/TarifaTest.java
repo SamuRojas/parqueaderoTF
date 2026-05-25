@@ -12,11 +12,8 @@ public class TarifaTest {
         Tarifa tarifa = new Tarifa(
                 TipoVehiculo.CARRO,
                 5000,
-                10
-        );
-
+                10);
         double resultado = tarifa.calcularValor(2, false);
-
         assertEquals(10000, resultado);
     }
 
@@ -26,11 +23,9 @@ public class TarifaTest {
         Tarifa tarifa = new Tarifa(
                 TipoVehiculo.CARRO,
                 5000,
-                10
-        );
+                10);
 
         double resultado = tarifa.calcularValor(2, true);
-
         assertEquals(9000, resultado);
     }
 }

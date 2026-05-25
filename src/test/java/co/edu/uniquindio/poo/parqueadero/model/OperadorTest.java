@@ -17,7 +17,6 @@ public class OperadorTest {
         );
 
         boolean resultado = operador.logIn("operador", "123456");
-
         assertTrue(resultado);
     }
 
@@ -32,7 +31,6 @@ public class OperadorTest {
         );
 
         boolean resultado = operador.logIn("mal", "mal");
-
         assertFalse(resultado);
     }
 }
