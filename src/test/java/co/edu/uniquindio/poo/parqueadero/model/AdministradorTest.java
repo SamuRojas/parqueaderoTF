@@ -14,9 +14,7 @@ public class AdministradorTest {
                 "321",
                 "samuel@gmail.com",
                 "SamuelRojas",
-                "123456"
-        );
-
+                "123456");
         boolean resultado = admin.logIn("SamuelRojas", "123456");
         assertTrue(resultado);
     }
@@ -29,8 +27,7 @@ public class AdministradorTest {
                 "321",
                 "samuel@gmail.com",
                 "SamuelRojas",
-                "123456"
-        );
+                "123456");
         boolean resultado = admin.logIn("malo", "malo");
         assertFalse(resultado);
     }

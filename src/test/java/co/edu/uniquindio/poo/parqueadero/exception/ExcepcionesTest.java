@@ -4,24 +4,33 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ExcepcionesTest {
+public class ExcepcionesTest {
 
     @Test
-    void placaDuplicada() {
-        PlacaDuplicadaException e = new PlacaDuplicadaException("ABC");
-        assertTrue(e.getMessage().contains("ABC"));
+    public void placaDuplicadaTest() {
+
+        PlacaDuplicadaException exception = new PlacaDuplicadaException("ABC123");
+        assertTrue(exception.getMessage().contains("ABC123"));
     }
 
     @Test
-    void espacioNoDisponible() {
-        EspacioNoDisponibleException e = new EspacioNoDisponibleException();
-        assertTrue(e.getMessage().contains("espacios"));
+    public void espacioNoDisponibleTest() {
+
+        EspacioNoDisponibleException exception = new EspacioNoDisponibleException();
+        assertTrue(exception.getMessage().contains("no hay espacios"));
     }
 
     @Test
-    void vehiculoNoEncontrado() {
-        VehiculoNoEncontradoException e = new VehiculoNoEncontradoException("X1");
-        assertTrue(e.getMessage().contains("X1"));
+    public void vehiculoNoEncontradoTest() {
+
+        VehiculoNoEncontradoException exception = new VehiculoNoEncontradoException("XYZ789");
+        assertTrue(exception.getMessage().contains("XYZ789"));
+    }
+
+    @Test
+    public void vehiculoNoIngresoTest() {
+
+        VehiculoNoIngresoException exception = new VehiculoNoIngresoException("AAA111");
+        assertTrue(exception.getMessage().contains("AAA111"));
     }
 }
-
