@@ -2,14 +2,35 @@ package co.edu.uniquindio.poo.parqueadero.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class TarifaTest {
+public class TarifaTest {
 
     @Test
-    void calcularValorConDescuento() {
-        Tarifa tarifa = new Tarifa(TipoVehiculo.CARRO, 1000, 10);
-        double total = tarifa.calcularValor(2);
-        assertEquals(1800, total, 0.01);
+    public void calcularValorSinDescuentoTest(){
+
+        Tarifa tarifa = new Tarifa(
+                TipoVehiculo.CARRO,
+                5000,
+                10
+        );
+
+        double resultado = tarifa.calcularValor(2, false);
+
+        assertEquals(10000, resultado);
+    }
+
+    @Test
+    public void calcularValorConDescuentoTest(){
+
+        Tarifa tarifa = new Tarifa(
+                TipoVehiculo.CARRO,
+                5000,
+                10
+        );
+
+        double resultado = tarifa.calcularValor(2, true);
+
+        assertEquals(9000, resultado);
     }
 }

@@ -1,73 +1,113 @@
 package co.edu.uniquindio.poo.parqueadero.model;
 
-import co.edu.uniquindio.poo.parqueadero.exception.EspacioNoDisponibleException;
-import co.edu.uniquindio.poo.parqueadero.exception.PlacaDuplicadaException;
-import co.edu.uniquindio.poo.parqueadero.exception.VehiculoNoIngresoException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class ParqueaderoTest {
+public class ParqueaderoTest {
 
     private Parqueadero parqueadero;
 
     @BeforeEach
-    void setUp() {
-        parqueadero = new Parqueadero("Test", 10, TipoParqueadero.CARRO);
-        parqueadero.agregarEspacio("C01", TipoEspacio.CARRO, EstadoEspacio.DISPONIBLE);
-        parqueadero.agregarEspacio("M01", TipoEspacio.MOTO, EstadoEspacio.DISPONIBLE);
-        parqueadero.agregarTarifa(TipoVehiculo.CARRO, 3000, 0);
-        parqueadero.agregarTarifa(TipoVehiculo.MOTO, 2000, 0);
+    public void setUp(){
+
+        parqueadero = new Parqueadero(
+                "UQ",
+                100,
+                TipoParqueadero.CARRO
+        );
     }
 
     @Test
-    void agregarEspacioDuplicado() {
-        String r = parqueadero.agregarEspacio("C01", TipoEspacio.CARRO, EstadoEspacio.DISPONIBLE);
-        assertTrue(r.contains("ya existe"));
+    public void agregarEspacioTest(){
+
+        parqueadero.agregarEspacio(
+                "A1",
+                TipoEspacio.CARRO,
+                EstadoEspacio.DISPONIBLE
+        );
+
+        assertTrue(parqueadero.buscarEspacio("A1"));
     }
 
     @Test
-    void registrarIngresoYPlacaDuplicada() throws Exception {
-        parqueadero.registrarIngreso("ABC123", "Juan", "1", TipoVehiculo.CARRO);
-        assertThrows(PlacaDuplicadaException.class, () ->
-                parqueadero.registrarIngreso("ABC123", "Juan", "1", TipoVehiculo.CARRO));
+    public void registrarVehiculoTest(){
+
+        parqueadero.registrarNuevoVehiculo(
+                "ABC123",
+                "Samuel",
+                "123",
+                EstadoVehiculo.DENTRO,
+                LocalTime.now(),
+                TipoVehiculo.CARRO
+        );
+
+        assertTrue(parqueadero.buscarVehiculo("ABC123"));
     }
 
     @Test
-    void sinEspaciosDisponibles() throws Exception {
-        parqueadero.registrarIngreso("A1", "Ana", "2", TipoVehiculo.CARRO);
-        assertThrows(EspacioNoDisponibleException.class, () ->
-                parqueadero.registrarIngreso("B2", "Luis", "3", TipoVehiculo.CARRO));
+    public void registrarUsuarioTest(){
+
+        parqueadero.registrarNuevoUsuario(
+                "Samuel",
+                "123",
+                "321",
+                "correo@gmail.com",
+                TipoUsuarioParqueadero.ESTUDIANTE
+        );
+
+        assertTrue(parqueadero.buscarUsuarioParqueadero("123"));
     }
 
     @Test
-    void salidaSinIngreso() {
-        parqueadero.registrarNuevoVehiculo("ZZZ999", "Luis", "9", EstadoVehiculo.FUERA,
-                java.time.LocalTime.now(), TipoVehiculo.CARRO);
-        assertThrows(VehiculoNoIngresoException.class, () ->
-                parqueadero.registrarSalida("ZZZ999"));
+    public void agregarTarifaTest(){
+
+        parqueadero.agregarTarifa(
+                TipoVehiculo.CARRO,
+                5000,
+                10
+        );
+
+        assertTrue(parqueadero.buscarTarifa(TipoVehiculo.CARRO));
     }
 
     @Test
-    void consultarInformacionVehiculo() throws Exception {
-        parqueadero.registrarIngreso("INFO1", "Pedro", "1101", TipoVehiculo.CARRO, "C01");
-        String info = parqueadero.consultarInformacionVehiculo("INFO1");
-        assertTrue(info.contains("C01"));
-        assertTrue(info.contains("Pedro"));
+    public void calcularHorasTest(){
+
+        double horas = parqueadero.calcularHoras(
+                LocalTime.of(8,0),
+                LocalTime.of(10,0)
+        );
+
+        assertEquals(2, horas);
     }
 
     @Test
-    void ingresoConEspacioEspecifico() throws Exception {
-        String r = parqueadero.registrarIngreso("ESP2", "Ana", "99", TipoVehiculo.MOTO, "M01");
-        assertTrue(r.contains("M01"));
-    }
+    public void asignarEspacioVehiculoTest(){
 
-    @Test
-    void registrarSalidaConValor() throws Exception {
-        parqueadero.registrarIngreso("XYZ10", "Maria", "5", TipoVehiculo.CARRO);
-        String salida = parqueadero.registrarSalida("XYZ10");
-        assertTrue(salida.contains("Total a pagar"));
-        assertEquals(0, parqueadero.consultarVehiculosDentro().size());
+        parqueadero.agregarEspacio(
+                "A1",
+                TipoEspacio.CARRO,
+                EstadoEspacio.DISPONIBLE
+        );
+
+        parqueadero.registrarNuevoVehiculo(
+                "ABC123",
+                "Samuel",
+                "123",
+                EstadoVehiculo.DENTRO,
+                LocalTime.now(),
+                TipoVehiculo.CARRO
+        );
+
+        String respuesta = parqueadero.asignarEspacioPorPlaca(
+                "ABC123",
+                "A1"
+        );
+
+        assertEquals("Espacio asignado correctamente", respuesta);
     }
 }

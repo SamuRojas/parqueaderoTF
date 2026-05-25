@@ -2,14 +2,37 @@ package co.edu.uniquindio.poo.parqueadero.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.LocalTime;
 
-class UsuarioParqueaderoTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class UsuarioParqueaderoTest {
 
     @Test
-    void registrarUsuario() {
-        UsuarioParqueadero u = new UsuarioParqueadero("Ana", "1101", "300", "a@uq.edu.co",
-                TipoUsuarioParqueadero.ESTUDIANTE);
-        assertEquals(TipoUsuarioParqueadero.ESTUDIANTE, u.getTipoUsuarioParqueadero());
+    public void asignarVehiculoTest(){
+
+        UsuarioParqueadero usuario = new UsuarioParqueadero(
+                "Samuel",
+                "123",
+                "321",
+                "correo@gmail.com",
+                TipoUsuarioParqueadero.ESTUDIANTE
+        );
+
+        Vehiculo vehiculo = new Vehiculo(
+                "ABC123",
+                "Samuel",
+                "123",
+                EstadoVehiculo.DENTRO,
+                TipoVehiculo.CARRO,
+                LocalTime.now(),
+                null,
+                null,
+                null
+        );
+
+        usuario.asignarVehiculo(vehiculo);
+
+        assertEquals(usuario, vehiculo.getTheUsuarioDelVehiculo());
     }
 }

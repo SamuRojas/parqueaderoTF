@@ -2,20 +2,41 @@ package co.edu.uniquindio.poo.parqueadero.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class AdministradorTest {
+public class AdministradorTest {
 
     @Test
-    void loginCorrecto() {
-        Administrador admin = new Administrador("Admin", "1", "300", "a@uq.edu.co", "u", "c");
-        assertTrue(admin.logIn("SamuelRojas", "123456"));
+    public void loginCorrectoTest() {
+
+        Administrador admin = new Administrador(
+                "Samuel",
+                "123",
+                "321",
+                "samuel@gmail.com",
+                "SamuelRojas",
+                "123456"
+        );
+
+        boolean resultado = admin.logIn("SamuelRojas", "123456");
+
+        assertTrue(resultado);
     }
 
     @Test
-    void loginIncorrecto() {
-        Administrador admin = new Administrador("Admin", "1", "300", "a@uq.edu.co", "u", "c");
-        assertFalse(admin.logIn("otro", "mal"));
+    public void loginIncorrectoTest() {
+
+        Administrador admin = new Administrador(
+                "Samuel",
+                "123",
+                "321",
+                "samuel@gmail.com",
+                "SamuelRojas",
+                "123456"
+        );
+
+        boolean resultado = admin.logIn("malo", "malo");
+
+        assertFalse(resultado);
     }
 }

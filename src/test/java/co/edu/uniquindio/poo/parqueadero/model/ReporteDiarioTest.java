@@ -4,20 +4,55 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ReporteDiarioTest {
+public class ReporteDiarioTest {
 
     @Test
-    void generarReporte() {
+    public void agregarRegistroTest(){
+
         ReporteDiario reporte = new ReporteDiario(LocalDate.now());
-        Registro r = new Registro("X1", LocalDate.now(), LocalTime.NOON, LocalTime.MIDNIGHT, 4000, 3);
-        reporte.agregarRegistro(r, 2);
-        ArrayList<Registro> lista = new ArrayList<>();
-        lista.add(r);
-        reporte.calcularPromedio(lista);
-        assertTrue(reporte.generarTexto().contains("Total vehículos"));
+
+        Registro registro = new Registro(
+                "ABC123",
+                LocalDate.now(),
+                LocalTime.now(),
+                LocalTime.now(),
+                10000,
+                6
+        );
+
+        reporte.agregarRegistro(registro);
+
+        assertEquals(1, reporte.getTotalIngresos());
+    }
+
+    @Test
+    public void calcularPromedioTest(){
+
+        ReporteDiario reporte = new ReporteDiario(LocalDate.now());
+
+        reporte.agregarRegistro(new Registro(
+                "ABC123",
+                LocalDate.now(),
+                LocalTime.now(),
+                LocalTime.now(),
+                10000,
+                2
+        ));
+
+        reporte.agregarRegistro(new Registro(
+                "XYZ123",
+                LocalDate.now(),
+                LocalTime.now(),
+                LocalTime.now(),
+                10000,
+                4
+        ));
+
+        reporte.calcularPromedio();
+
+        assertEquals(3, reporte.getTiempoPromedioHoras());
     }
 }

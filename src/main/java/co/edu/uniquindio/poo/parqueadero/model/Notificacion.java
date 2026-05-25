@@ -17,6 +17,7 @@ public class Notificacion implements IReporte {
     public Notificacion (String destinatario, String mensaje, LocalDateTime fechaInicio){
         this.destinatario = destinatario;
         this. mensaje = mensaje;
+        this.fechaInicio = fechaInicio;
     }
 
     public String getDestinatario() {return destinatario;}
