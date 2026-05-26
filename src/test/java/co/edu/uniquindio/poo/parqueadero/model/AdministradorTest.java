@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AdministradorTest {
 
+    /**
+     * Prueba que verifica que el login del administrador es exitoso
+     * cuando se ingresan el usuario y la contrasena correctos
+     */
+
     @Test
     public void loginCorrectoTest() {
         Administrador admin = new Administrador(
@@ -18,6 +23,11 @@ public class AdministradorTest {
         boolean resultado = admin.logIn("SamuelRojas", "123456");
         assertTrue(resultado);
     }
+
+    /**
+     * Prueba que verifica que el login del administrador falla
+     * cuando se ingresan usuario y contrasena incorrectos
+     */
 
     @Test
     public void loginIncorrectoTest() {

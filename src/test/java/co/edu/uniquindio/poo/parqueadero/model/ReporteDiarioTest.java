@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ReporteDiarioTest {
 
+    /**
+     * Prueba que verifica que al agregar un registro al reporte diario,
+     * el total de ingresos aumenta en uno correctamente
+     */
     @Test
     public void agregarRegistroTest(){
 
@@ -25,6 +29,11 @@ public class ReporteDiarioTest {
         reporte.agregarRegistro(registro);
         assertEquals(1, reporte.getTotalIngresos());
     }
+
+    /**
+     * Prueba que verifica que el calculo del promedio de horas estacionadas
+     * da el resultado correcto al tener dos registros con distintas horas
+     */
 
     @Test
     public void calcularPromedioTest(){

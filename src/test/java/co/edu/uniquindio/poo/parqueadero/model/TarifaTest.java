@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TarifaTest {
 
+    /**
+     * Prueba que verifica que el calculo del valor a pagar es correcto
+     * cuando el vehiculo no tiene descuento aplicado
+     */
+
     @Test
     public void calcularValorSinDescuentoTest(){
 
@@ -16,6 +21,12 @@ public class TarifaTest {
         double resultado = tarifa.calcularValor(2, false);
         assertEquals(10000, resultado);
     }
+
+
+    /**
+     * Prueba que verifica que el calculo del valor a pagar es correcto
+     * cuando el vehiculo si tiene descuento aplicado
+     */
 
     @Test
     public void calcularValorConDescuentoTest(){

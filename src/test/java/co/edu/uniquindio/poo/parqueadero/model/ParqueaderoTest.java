@@ -11,6 +11,11 @@ public class ParqueaderoTest {
 
     private Parqueadero parqueadero;
 
+    /**
+     * Metodo que se ejecuta antes de cada prueba para crear un parqueadero
+     * nuevo con datos base, asegurando que cada test parte de un estado limpio
+     */
+
     @BeforeEach
     public void setUp(){
 
@@ -19,6 +24,11 @@ public class ParqueaderoTest {
                 100,
                 TipoParqueadero.CARRO);
     }
+
+    /**
+     * Prueba que verifica que un espacio se agrega correctamente al parqueadero
+     * y que puede ser encontrado luego por su codigo
+     */
 
     @Test
     public void agregarEspacioTest(){
@@ -29,6 +39,11 @@ public class ParqueaderoTest {
                 EstadoEspacio.DISPONIBLE);
         assertTrue(parqueadero.buscarEspacio("A1"));
     }
+
+    /**
+     * Prueba que verifica que un vehiculo se registra correctamente en el parqueadero
+     * y que puede ser encontrado luego por su placa
+     */
 
     @Test
     public void registrarVehiculoTest(){
@@ -43,6 +58,11 @@ public class ParqueaderoTest {
         assertTrue(parqueadero.buscarVehiculo("ABC123"));
     }
 
+    /**
+     * Prueba que verifica que un usuario del parqueadero se registra correctamente
+     * y que puede ser encontrado luego por su identificacion
+     */
+
     @Test
     public void registrarUsuarioTest(){
 
@@ -55,6 +75,11 @@ public class ParqueaderoTest {
         assertTrue(parqueadero.buscarUsuarioParqueadero("123"));
     }
 
+    /**
+     * Prueba que verifica que una tarifa se agrega correctamente al parqueadero
+     * y que puede ser encontrada luego por el tipo de vehiculo
+     */
+
     @Test
     public void agregarTarifaTest(){
 
@@ -65,6 +90,11 @@ public class ParqueaderoTest {
         assertTrue(parqueadero.buscarTarifa(TipoVehiculo.CARRO));
     }
 
+    /**
+     * Prueba que verifica que el calculo de horas entre hora de ingreso y hora de salida
+     * retorna el valor correcto
+     */
+
     @Test
     public void calcularHorasTest(){
 
@@ -73,6 +103,12 @@ public class ParqueaderoTest {
                 LocalTime.of(10,0));
         assertEquals(2, horas);
     }
+
+
+    /**
+     * Prueba que verifica que se puede asignar un espacio a un vehiculo correctamente,
+     * usando la placa del vehiculo y el codigo del espacio
+     */
 
     @Test
     public void asignarEspacioVehiculoTest(){

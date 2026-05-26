@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistroTest {
 
+    /**
+     * Prueba que verifica que un registro se crea correctamente
+     * con la placa, el valor pagado y las horas estacionadas indicadas
+     */
+
     @Test
     public void crearRegistroTest(){
 
@@ -25,6 +30,11 @@ public class RegistroTest {
         assertEquals(2,
                 registro.getHorasEstacionadas());
     }
+
+    /**
+     * Prueba que verifica que el valor pagado de un registro
+     * se puede modificar correctamente despues de haberlo creado
+     */
 
     @Test
     public void modificarValorPagadoTest(){

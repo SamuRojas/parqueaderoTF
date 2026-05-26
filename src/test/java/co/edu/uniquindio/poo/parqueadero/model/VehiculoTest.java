@@ -8,6 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class VehiculoTest {
 
+    /**
+     * Prueba que verifica que un vehiculo se crea correctamente
+     * con la placa, el nombre del conductor y el tipo de vehiculo indicados
+     */
+
     @Test
     public void crearVehiculoTest(){
 
@@ -26,6 +31,11 @@ public class VehiculoTest {
         assertEquals("Samuel", vehiculo.getNombreConductor());
         assertEquals(TipoVehiculo.CARRO, vehiculo.getTipoVehiculo());
     }
+
+    /**
+     * Prueba que verifica que se puede asignar un espacio a un vehiculo
+     * y que la relacion queda correctamente establecida
+     */
 
     @Test
     public void asignarEspacioVehiculoTest(){
@@ -50,6 +60,11 @@ public class VehiculoTest {
 
         assertEquals(espacio, vehiculo.getTheEspacioDelVehiculo());
     }
+
+    /**
+     * Prueba que verifica que el estado de un vehiculo se puede cambiar correctamente
+     * despues de haberlo creado con un estado inicial
+     */
 
     @Test
     public void cambiarEstadoVehiculoTest(){

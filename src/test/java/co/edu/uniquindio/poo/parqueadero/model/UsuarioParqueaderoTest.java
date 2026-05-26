@@ -8,6 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioParqueaderoTest {
 
+    /**
+     * Prueba que verifica que al asignar un vehiculo a un usuario del parqueadero,
+     * la relacion queda correctamente establecida en ambos lados
+     */
+
     @Test
     public void asignarVehiculoTest(){
 
