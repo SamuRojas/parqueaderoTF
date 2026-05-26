@@ -30,6 +30,12 @@ public class LoginController {
     private String rol = "Operador";
     private final ModelFactory model = ModelFactory.getInstancia();
 
+    /**
+     * Metodo que permite establecer el rol del usuario que intenta iniciar sesion,
+     * y actualiza el titulo de la pantalla con el rol seleccionado
+     * @param rolNuevo rol que se asignara al login, puede ser Administrador u Operador
+     */
+
     public void setRol(String rolNuevo) {
         this.rol = rolNuevo;
         if (lblTituloRol != null) {
@@ -37,10 +43,22 @@ public class LoginController {
         }
     }
 
+    /**
+     * Metodo que permite volver a la pantalla de inicio al presionar el boton volver
+     * @param event evento del boton volver
+     */
+
     @FXML
     protected void onVolver(ActionEvent event) throws IOException {
         abrirPantalla("/co.edu.uniquindio.poo.parqueadero/view/Inicio.fxml", 900, 560, "PARKUQ");
     }
+
+    /**
+     * Metodo que permite validar el usuario y contrasena ingresados,
+     * determinando si corresponden al administrador o al operador segun el rol seleccionado,
+     * y abriendo la pantalla correspondiente si el login es correcto
+     * @param event evento del boton ingresar
+     */
 
     @FXML
     protected void onIngresar(ActionEvent event) {
@@ -90,6 +108,15 @@ public class LoginController {
         }
     }
 
+    /**
+     * Metodo privado que permite cargar y mostrar una pantalla nueva en la misma ventana,
+     * aplicando los estilos y el titulo indicados
+     * @param ruta ruta del archivo FXML a cargar
+     * @param ancho ancho de la nueva escena
+     * @param alto alto de la nueva escena
+     * @param titulo titulo de la ventana
+     */
+
     private void abrirPantalla(String ruta, int ancho, int alto, String titulo) throws IOException {
         URL url = getClass().getResource(ruta);
         if (url == null) {
@@ -104,6 +131,11 @@ public class LoginController {
         stage.setTitle(titulo);
         stage.centerOnScreen();
     }
+
+    /**
+     * Metodo privado que muestra un mensaje de texto en el label de mensajes de la pantalla de login
+     * @param texto mensaje a mostrar
+     */
 
     private void mostrarMensaje(String texto) {
         if (lblMensaje != null) {

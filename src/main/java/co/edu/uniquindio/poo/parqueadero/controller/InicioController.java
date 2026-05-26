@@ -16,15 +16,33 @@ public class InicioController {
     @FXML
     private Button btnOperador;
 
+    /**
+     * Metodo que permite abrir la pantalla de login con el rol de Administrador
+     * al presionar el boton correspondiente en la pantalla de inicio
+     * @param event evento del boton administrador
+     */
+
     @FXML
     protected void onAdministrador(ActionEvent event) throws IOException {
         abrirLogin("Administrador");
     }
 
+    /**
+     * Metodo que permite abrir la pantalla de login con el rol de Operador
+     * al presionar el boton correspondiente en la pantalla de inicio
+     * @param event evento del boton operador
+     */
+
     @FXML
     protected void onOperador(ActionEvent event) throws IOException {
         abrirLogin("Operador");
     }
+
+    /**
+     * Metodo privado que carga la pantalla de login, le asigna el rol recibido
+     * y la muestra en la misma ventana con el titulo actualizado
+     * @param rol rol que se le pasara al LoginController, puede ser Administrador u Operador
+     */
 
     private void abrirLogin(String rol) throws IOException {
         FXMLLoader loader = new FXMLLoader(

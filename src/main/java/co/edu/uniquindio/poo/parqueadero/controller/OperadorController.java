@@ -48,6 +48,12 @@ public class OperadorController {
 
     private final Parqueadero parqueadero = ModelFactory.getInstancia().getParqueadero();
 
+    /**
+     * Metodo que se ejecuta automaticamente al cargar la pantalla del operador,
+     * llena el combo de tipo de vehiculo, configura los TextAreas como solo lectura
+     * y carga los datos iniciales en pantalla
+     */
+
     @FXML
     public void initialize() {
         // Llenar combo tipo vehiculo con todos los valores del enum
@@ -67,6 +73,12 @@ public class OperadorController {
     // ============================================================
     //  TAB INGRESO
     // ============================================================
+
+    /**
+     * Metodo que permite registrar el ingreso de un vehiculo al parqueadero desde la interfaz,
+     * validando que todos los campos esten completos y manejando las excepciones del modelo
+     * @param event evento del boton registrar ingreso
+     */
 
     @FXML
     protected void onRegistrarIngreso(ActionEvent event) {
@@ -93,6 +105,11 @@ public class OperadorController {
         }
     }
 
+    /**
+     * Metodo privado que borra el contenido de todos los campos del formulario de ingreso
+     * y deja seleccionado el primer tipo de vehiculo del combo
+     */
+
     private void limpiarFormularioIngreso() {
         txtPlacaIngreso.clear();
         txtNombreConductor.clear();
@@ -103,6 +120,12 @@ public class OperadorController {
     // ============================================================
     //  TAB SALIDA Y COBRO
     // ============================================================
+
+    /**
+     * Metodo que permite simular el cobro de salida de un vehiculo sin registrarla oficialmente,
+     * validando que se haya ingresado la placa y manejando las excepciones del modelo
+     * @param event evento del boton simular salida
+     */
 
     @FXML
     protected void onSimularSalida(ActionEvent event) {
@@ -121,6 +144,12 @@ public class OperadorController {
             mostrarMensaje(e.getMessage(), false);
         }
     }
+
+    /**
+     * Metodo que permite registrar la salida definitiva de un vehiculo del parqueadero,
+     * validando que se haya ingresado la placa y manejando las excepciones del modelo
+     * @param event evento del boton registrar salida
+     */
 
     @FXML
     protected void onRegistrarSalida(ActionEvent event) {
@@ -145,6 +174,12 @@ public class OperadorController {
     //  TAB BUSCAR VEHICULO
     // ============================================================
 
+    /**
+     * Metodo que permite buscar y mostrar la informacion de un vehiculo
+     * ingresando su placa en la interfaz del operador
+     * @param event evento del boton buscar vehiculo
+     */
+
     @FXML
     protected void onBuscarVehiculo(ActionEvent event) {
         String placa = txtPlacaBuscar.getText().trim().toUpperCase();
@@ -167,6 +202,12 @@ public class OperadorController {
     //  TAB ESPACIOS
     // ============================================================
 
+    /**
+     * Metodo que permite ver el detalle de todos los espacios del parqueadero
+     * y actualizar las estadisticas en la pantalla del operador
+     * @param event evento del boton ver espacios
+     */
+
     @FXML
     protected void onVerEspacios(ActionEvent event) {
         txtDetalleEspacios.setText(parqueadero.consultarDetalleEspacios());
@@ -178,6 +219,12 @@ public class OperadorController {
     //  TAB DENTRO DEL PARQUEADERO
     // ============================================================
 
+    /**
+     * Metodo que permite actualizar todas las listas y estadisticas mostradas
+     * en la pantalla del operador con los datos mas recientes
+     * @param event evento del boton actualizar lista
+     */
+
     @FXML
     protected void onActualizarLista(ActionEvent event) {
         actualizarTodo();
@@ -187,6 +234,12 @@ public class OperadorController {
     // ============================================================
     //  TAB REPORTES
     // ============================================================
+
+    /**
+     * Metodo que permite generar el reporte diario del parqueadero
+     * y mostrarlo en el area de texto de reportes de la interfaz
+     * @param event evento del boton generar reporte
+     */
 
     @FXML
     protected void onGenerarReporte(ActionEvent event) {
@@ -199,6 +252,11 @@ public class OperadorController {
     // ============================================================
     //  CERRAR SESION
     // ============================================================
+
+    /**
+     * Metodo que permite cerrar la sesion del operador y volver a la pantalla de inicio
+     * @param event evento del boton cerrar sesion
+     */
 
     @FXML
     protected void onCerrarSesion(ActionEvent event) throws IOException {
@@ -216,6 +274,11 @@ public class OperadorController {
     //  METODOS PRIVADOS DE APOYO
     // ============================================================
 
+    /**
+     * Metodo privado que actualiza la lista de vehiculos dentro, el detalle de espacios
+     * y las estadisticas en la pantalla del operador con los datos mas recientes
+     */
+
     private void actualizarTodo() {
         // Lista de vehiculos dentro
         List<String> textos = new ArrayList<>();
@@ -231,6 +294,11 @@ public class OperadorController {
 
         actualizarEstadisticas();
     }
+
+    /**
+     * Metodo privado que recorre todos los espacios del parqueadero y actualiza
+     * los contadores de espacios totales, ocupados y disponibles en la interfaz
+     */
 
     private void actualizarEstadisticas() {
         int total       = 0;
@@ -251,6 +319,14 @@ public class OperadorController {
         if (lblDisponibles    != null) lblDisponibles.setText(String.valueOf(disponibles));
     }
 
+
+    /**
+     * Metodo privado que muestra un mensaje en la barra inferior de la pantalla del operador,
+     * aplicando estilo verde si es un mensaje de exito o rojo si es un mensaje de error
+     * @param texto mensaje a mostrar
+     * @param esOk true si es un mensaje de exito, false si es un mensaje de error
+     */
+
     private void mostrarMensaje(String texto, boolean esOk) {
         if (lblMensajeOperador != null) {
             lblMensajeOperador.setText(texto);
@@ -262,6 +338,12 @@ public class OperadorController {
             }
         }
     }
+
+    /**
+     * Metodo privado que muestra una ventana emergente de tipo advertencia
+     * con el mensaje de error recibido desde el modelo
+     * @param mensaje texto del error a mostrar en la alerta
+     */
 
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.WARNING);

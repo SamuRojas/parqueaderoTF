@@ -39,6 +39,13 @@ public class AdministradorController {
 
     private final Parqueadero parqueadero = ModelFactory.getInstancia().getParqueadero();
 
+
+    /**
+     * Metodo que se ejecuta automaticamente al cargar la pantalla del administrador,
+     * llena los combos con los valores de los enums, selecciona el primero por defecto
+     * y carga las listas iniciales de espacios, tarifas y usuarios
+     */
+
     @FXML
     public void initialize() {
         // Llenar combos con los valores de los enums
@@ -60,7 +67,11 @@ public class AdministradorController {
     // ============================================================
     //  TAB ESPACIOS
     // ============================================================
-
+    /**
+     * Metodo que permite agregar un nuevo espacio desde la interfaz del administrador,
+     * validando que el codigo no este vacio antes de llamar al modelo
+     * @param event evento del boton agregar espacio
+     */
     @FXML
     protected void onAgregarEspacio(ActionEvent event) {
         String codigo = txtCodigoEspacio.getText().trim();
@@ -76,7 +87,11 @@ public class AdministradorController {
         txtCodigoEspacio.clear();
         refrescarListas();
     }
-
+    /**
+     * Metodo que permite cargar los datos de un espacio seleccionado de la lista
+     * en los campos del formulario para poder editarlo
+     * @param event evento del boton cargar espacio seleccionado
+     */
     @FXML
     protected void onCargarEspacioSeleccionado(ActionEvent event) {
         Espacio esp = listaEspacios.getSelectionModel().getSelectedItem();
@@ -89,7 +104,11 @@ public class AdministradorController {
         cmbEstadoEspacio.getSelectionModel().select(esp.getEstadoEspacio());
         mensaje("Espacio " + esp.getCodigo() + " cargado en el formulario", true);
     }
-
+    /**
+     * Metodo que permite modificar la informacion de un espacio existente desde la interfaz,
+     * validando que se haya escrito o seleccionado un codigo antes de proceder
+     * @param event evento del boton modificar espacio
+     */
     @FXML
     protected void onModificarEspacio(ActionEvent event) {
         String codigo = txtCodigoEspacio.getText().trim();
@@ -104,6 +123,12 @@ public class AdministradorController {
         mensaje(respuesta, true);
         refrescarListas();
     }
+
+    /**
+     * Metodo que permite deshabilitar un espacio del parqueadero poniendolo fuera de servicio,
+     * validando que se haya ingresado el codigo del espacio
+     * @param event evento del boton deshabilitar espacio
+     */
 
     @FXML
     protected void onDeshabilitarEspacio(ActionEvent event) {
@@ -121,6 +146,12 @@ public class AdministradorController {
     //  TAB TARIFAS
     // ============================================================
 
+    /**
+     * Metodo que permite agregar una nueva tarifa desde la interfaz del administrador,
+     * validando que el valor por hora y el descuento sean numeros validos
+     * @param event evento del boton agregar tarifa
+     */
+
     @FXML
     protected void onAgregarTarifa(ActionEvent event) {
         try {
@@ -135,6 +166,13 @@ public class AdministradorController {
             mensaje("Valor por hora y descuento deben ser numeros validos (ej: 3000 o 5.0)", false);
         }
     }
+
+
+    /**
+     * Metodo que permite actualizar una tarifa existente desde la interfaz del administrador,
+     * validando que el valor por hora y el descuento sean numeros validos
+     * @param event evento del boton actualizar tarifa
+     */
 
     @FXML
     protected void onActualizarTarifa(ActionEvent event) {
@@ -152,6 +190,12 @@ public class AdministradorController {
     // ============================================================
     //  TAB USUARIOS
     // ============================================================
+
+    /**
+     * Metodo que permite registrar un nuevo usuario del parqueadero desde la interfaz,
+     * validando que el nombre y la identificacion no esten vacios
+     * @param event evento del boton agregar usuario
+     */
 
     @FXML
     protected void onAgregarUsuario(ActionEvent event) {
@@ -174,6 +218,12 @@ public class AdministradorController {
         refrescarListas();
     }
 
+    /**
+     * Metodo que permite actualizar la informacion de un usuario existente desde la interfaz,
+     * validando que la identificacion no este vacia antes de proceder
+     * @param event evento del boton actualizar usuario
+     */
+
     @FXML
     protected void onActualizarUsuario(ActionEvent event) {
         String id = txtIdUsuario.getText().trim();
@@ -192,6 +242,12 @@ public class AdministradorController {
         refrescarListas();
     }
 
+    /**
+     * Metodo que permite eliminar un usuario del parqueadero desde la interfaz,
+     * validando que la identificacion no este vacia antes de proceder
+     * @param event evento del boton eliminar usuario
+     */
+
     @FXML
     protected void onEliminarUsuario(ActionEvent event) {
         String id = txtIdUsuario.getText().trim();
@@ -204,6 +260,12 @@ public class AdministradorController {
         limpiarFormularioUsuario();
         refrescarListas();
     }
+
+    /**
+     * Metodo que permite cargar los datos de un usuario seleccionado de la lista
+     * en los campos del formulario para poder editarlo
+     * @param event evento del boton cargar usuario seleccionado
+     */
 
     @FXML
     protected void onCargarUsuarioSeleccionado(ActionEvent event) {
@@ -224,6 +286,11 @@ public class AdministradorController {
     //  CERRAR SESION
     // ============================================================
 
+    /**
+     * Metodo que permite cerrar la sesion del administrador y volver a la pantalla de inicio
+     * @param event evento del boton cerrar sesion
+     */
+
     @FXML
     protected void onCerrarSesion(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -241,11 +308,21 @@ public class AdministradorController {
     //  METODOS PRIVADOS DE APOYO
     // ============================================================
 
+    /**
+     * Metodo privado que actualiza las listas de espacios, tarifas y usuarios
+     * en la interfaz con los datos mas recientes del modelo
+     */
+
     private void refrescarListas() {
         listaEspacios.setItems(FXCollections.observableArrayList(parqueadero.getListEspacios()));
         listaTarifas.setItems(FXCollections.observableArrayList(parqueadero.getListTarifas()));
         listaUsuarios.setItems(FXCollections.observableArrayList(parqueadero.getListUsuariosParqueaderos()));
     }
+
+    /**
+     * Metodo privado que borra el contenido de todos los campos del formulario de usuarios
+     * y deja seleccionado el primer tipo de usuario del combo
+     */
 
     private void limpiarFormularioUsuario() {
         txtNombreUsuario.clear();
@@ -254,6 +331,14 @@ public class AdministradorController {
         txtCorreoUsuario.clear();
         cmbTipoUsuario.getSelectionModel().selectFirst();
     }
+
+
+    /**
+     * Metodo privado que muestra un mensaje en la barra inferior de la pantalla del administrador,
+     * aplicando estilo verde si es un mensaje de exito o rojo si es un mensaje de error
+     * @param texto mensaje a mostrar
+     * @param esOk true si es un mensaje de exito, false si es un mensaje de error
+     */
 
     private void mensaje(String texto, boolean esOk) {
         if (lblMensajeAdmin != null) {
