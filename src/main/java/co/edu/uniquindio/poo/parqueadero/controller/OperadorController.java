@@ -12,125 +12,160 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OperadorController {
 
+    // ---- Tab Ingreso ----
     @FXML private TextField txtPlacaIngreso;
     @FXML private TextField txtNombreConductor;
     @FXML private TextField txtIdConductor;
     @FXML private ComboBox<TipoVehiculo> cmbTipoVehiculo;
-    @FXML private ComboBox<String> cmbEspacioIngreso;
+
+    // ---- Tab Salida ----
     @FXML private TextField txtPlacaSalida;
     @FXML private TextArea txtSimulacionSalida;
+
+    // ---- Tab Buscar vehiculo ----
     @FXML private TextField txtPlacaBuscar;
     @FXML private TextArea txtInfoVehiculo;
+
+    // ---- Tab Espacios ----
     @FXML private TextArea txtDetalleEspacios;
-    @FXML private ListView<String> listaVehiculosDentro;
     @FXML private Label lblTotalEspacios;
     @FXML private Label lblOcupados;
     @FXML private Label lblDisponibles;
-    @FXML private Label lblMensajeOperador;
-    @FXML private TextField txtHorasReporte;
+
+    // ---- Tab Dentro del parqueadero ----
+    @FXML private ListView<String> listaVehiculosDentro;
+
+    // ---- Tab Reportes ----
     @FXML private TextArea txtReporte;
+
+    // ---- Barra inferior ----
+    @FXML private Label lblMensajeOperador;
 
     private final Parqueadero parqueadero = ModelFactory.getInstancia().getParqueadero();
 
     @FXML
     public void initialize() {
+        // Llenar combo tipo vehiculo con todos los valores del enum
         cmbTipoVehiculo.setItems(FXCollections.observableArrayList(TipoVehiculo.values()));
         cmbTipoVehiculo.getSelectionModel().selectFirst();
-        cargarEspaciosDisponibles();
+
+        // Los TextAreas de solo lectura no se editan
+        if (txtSimulacionSalida != null) txtSimulacionSalida.setEditable(false);
+        if (txtInfoVehiculo != null)     txtInfoVehiculo.setEditable(false);
+        if (txtDetalleEspacios != null)  txtDetalleEspacios.setEditable(false);
+        if (txtReporte != null)          txtReporte.setEditable(false);
+
+        // Cargar datos iniciales en pantalla
         actualizarTodo();
-        if (txtSimulacionSalida != null) {
-            txtSimulacionSalida.setEditable(false);
-        }
-        if (txtInfoVehiculo != null) {
-            txtInfoVehiculo.setEditable(false);
-        }
-        if (txtDetalleEspacios != null) {
-            txtDetalleEspacios.setEditable(false);
-        }
-        if (txtReporte != null) {
-            txtReporte.setEditable(false);
-        }
     }
 
-    @FXML
-    protected void onTipoVehiculoCambio(ActionEvent event) {
-        cargarEspaciosDisponibles();
-    }
+    // ============================================================
+    //  TAB INGRESO
+    // ============================================================
 
     @FXML
     protected void onRegistrarIngreso(ActionEvent event) {
+        String placa  = txtPlacaIngreso.getText().trim().toUpperCase();
+        String nombre = txtNombreConductor.getText().trim();
+        String id     = txtIdConductor.getText().trim();
+        TipoVehiculo tipo = cmbTipoVehiculo.getValue();
+
+        if (placa.isEmpty() || nombre.isEmpty() || id.isEmpty() || tipo == null) {
+            mostrarMensaje("Complete todos los campos obligatorios (placa, conductor, ID y tipo)", false);
+            return;
+        }
+
         try {
-            String placa = txtPlacaIngreso.getText().trim().toUpperCase();
-            String nombre = txtNombreConductor.getText().trim();
-            String id = txtIdConductor.getText().trim();
-            TipoVehiculo tipo = cmbTipoVehiculo.getValue();
-
-            if (placa.isEmpty() || nombre.isEmpty() || id.isEmpty()) {
-                mostrarMensaje("Complete placa, conductor e identificación", false);
-                return;
-            }
-
-            String codigoEspacio = cmbEspacioIngreso.getValue();
-            String respuesta = parqueadero.registrarIngreso(placa, nombre, id, tipo, codigoEspacio);
+            // registrarIngreso(placa, nombre, id, tipoVehiculo) — 4 params segun el modelo
+            String respuesta = parqueadero.registrarIngreso(placa, nombre, id, tipo);
             mostrarMensaje(respuesta, true);
-            limpiarIngreso();
+            limpiarFormularioIngreso();
             actualizarTodo();
+
         } catch (ParqueaderoException e) {
+            mostrarAlerta(e.getMessage());
             mostrarMensaje(e.getMessage(), false);
         }
     }
 
+    private void limpiarFormularioIngreso() {
+        txtPlacaIngreso.clear();
+        txtNombreConductor.clear();
+        txtIdConductor.clear();
+        cmbTipoVehiculo.getSelectionModel().selectFirst();
+    }
+
+    // ============================================================
+    //  TAB SALIDA Y COBRO
+    // ============================================================
+
     @FXML
     protected void onSimularSalida(ActionEvent event) {
+        String placa = txtPlacaSalida.getText().trim().toUpperCase();
+        if (placa.isEmpty()) {
+            mostrarMensaje("Ingrese la placa del vehiculo", false);
+            return;
+        }
         try {
-            String placa = txtPlacaSalida.getText().trim().toUpperCase();
-            if (placa.isEmpty()) {
-                mostrarMensaje("Ingrese la placa", false);
-                return;
-            }
-            txtSimulacionSalida.setText(parqueadero.simularSalida(placa));
-            mostrarMensaje("Simulación calculada", true);
+            String resultado = parqueadero.simularSalida(placa);
+            txtSimulacionSalida.setText(resultado);
+            mostrarMensaje("Simulacion calculada correctamente", true);
         } catch (ParqueaderoException e) {
             txtSimulacionSalida.clear();
+            mostrarAlerta(e.getMessage());
             mostrarMensaje(e.getMessage(), false);
         }
     }
 
     @FXML
     protected void onRegistrarSalida(ActionEvent event) {
+        String placa = txtPlacaSalida.getText().trim().toUpperCase();
+        if (placa.isEmpty()) {
+            mostrarMensaje("Ingrese la placa del vehiculo", false);
+            return;
+        }
         try {
-            String placa = txtPlacaSalida.getText().trim().toUpperCase();
-            if (placa.isEmpty()) {
-                mostrarMensaje("Ingrese la placa", false);
-                return;
-            }
-            String respuesta = parqueadero.registrarSalida(placa);
-            txtSimulacionSalida.setText(respuesta);
-            mostrarMensaje(respuesta, true);
+            String resultado = parqueadero.registrarSalida(placa);
+            txtSimulacionSalida.setText(resultado);
+            mostrarMensaje("Salida registrada correctamente", true);
+            txtPlacaSalida.clear();
             actualizarTodo();
         } catch (ParqueaderoException e) {
+            mostrarAlerta(e.getMessage());
             mostrarMensaje(e.getMessage(), false);
         }
     }
 
+    // ============================================================
+    //  TAB BUSCAR VEHICULO
+    // ============================================================
+
     @FXML
     protected void onBuscarVehiculo(ActionEvent event) {
+        String placa = txtPlacaBuscar.getText().trim().toUpperCase();
+        if (placa.isEmpty()) {
+            mostrarMensaje("Ingrese una placa para buscar", false);
+            return;
+        }
         try {
-            String placa = txtPlacaBuscar.getText().trim().toUpperCase();
-            if (placa.isEmpty()) {
-                mostrarMensaje("Ingrese la placa a buscar", false);
-                return;
-            }
-            txtInfoVehiculo.setText(parqueadero.consultarInformacionVehiculo(placa));
-            mostrarMensaje("Información cargada", true);
+            String info = parqueadero.consultarInformacionVehiculo(placa);
+            txtInfoVehiculo.setText(info);
+            mostrarMensaje("Informacion cargada", true);
         } catch (ParqueaderoException e) {
             txtInfoVehiculo.clear();
+            mostrarAlerta(e.getMessage());
             mostrarMensaje(e.getMessage(), false);
         }
     }
+
+    // ============================================================
+    //  TAB ESPACIOS
+    // ============================================================
 
     @FXML
     protected void onVerEspacios(ActionEvent event) {
@@ -139,32 +174,37 @@ public class OperadorController {
         mostrarMensaje("Espacios actualizados", true);
     }
 
+    // ============================================================
+    //  TAB DENTRO DEL PARQUEADERO
+    // ============================================================
+
     @FXML
     protected void onActualizarLista(ActionEvent event) {
         actualizarTodo();
         mostrarMensaje("Listas actualizadas", true);
     }
 
+    // ============================================================
+    //  TAB REPORTES
+    // ============================================================
+
     @FXML
     protected void onGenerarReporte(ActionEvent event) {
-        double horasMin = 2;
-        try {
-            if (txtHorasReporte != null && !txtHorasReporte.getText().trim().isEmpty()) {
-                horasMin = Double.parseDouble(txtHorasReporte.getText().trim());
-            }
-        } catch (NumberFormatException e) {
-            horasMin = 2;
-        }
-        ReporteDiario reporte = parqueadero.generarReporteDiario(horasMin);
+        // generarReporteDiario() no recibe parametros — asi esta en el modelo
+        ReporteDiario reporte = parqueadero.generarReporteDiario();
         txtReporte.setText(reporte.generarTexto());
-        mostrarMensaje("Reporte generado", true);
+        mostrarMensaje("Reporte del dia generado correctamente", true);
     }
+
+    // ============================================================
+    //  CERRAR SESION
+    // ============================================================
 
     @FXML
     protected void onCerrarSesion(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/co.edu.uniquindio.poo.parqueadero/view/Inicio.fxml"));
-        Scene scene = new Scene(loader.load(), 760, 520);
+        Scene scene = new Scene(loader.load(), 900, 560);
         VistaUtil.aplicarEstilos(scene);
         Stage stage = (Stage) listaVehiculosDentro.getScene().getWindow();
         stage.setScene(scene);
@@ -172,59 +212,62 @@ public class OperadorController {
         stage.centerOnScreen();
     }
 
-    private void cargarEspaciosDisponibles() {
-        TipoVehiculo tipo = cmbTipoVehiculo.getValue();
-        if (tipo == null) {
-            return;
-        }
-        java.util.List<String> codigos = parqueadero.listarCodigosEspaciosDisponibles(tipo);
-        cmbEspacioIngreso.setItems(FXCollections.observableArrayList(codigos));
-        if (!codigos.isEmpty()) {
-            cmbEspacioIngreso.getSelectionModel().selectFirst();
-        }
-    }
+    // ============================================================
+    //  METODOS PRIVADOS DE APOYO
+    // ============================================================
 
     private void actualizarTodo() {
-        java.util.List<String> textos = new java.util.ArrayList<>();
+        // Lista de vehiculos dentro
+        List<String> textos = new ArrayList<>();
         for (Vehiculo v : parqueadero.consultarVehiculosDentro()) {
             textos.add(parqueadero.textoVehiculoDentro(v));
         }
         listaVehiculosDentro.setItems(FXCollections.observableArrayList(textos));
-        txtDetalleEspacios.setText(parqueadero.consultarDetalleEspacios());
+
+        // Detalle de espacios
+        if (txtDetalleEspacios != null) {
+            txtDetalleEspacios.setText(parqueadero.consultarDetalleEspacios());
+        }
+
         actualizarEstadisticas();
-        cargarEspaciosDisponibles();
     }
 
     private void actualizarEstadisticas() {
-        int total = 0;
-        int ocupados = 0;
+        int total       = 0;
+        int ocupados    = 0;
         int disponibles = 0;
+
         for (Espacio e : parqueadero.getListEspacios()) {
-            total = total + 1;
+            total++;
             if (e.getEstadoEspacio() == EstadoEspacio.OCUPADO) {
-                ocupados = ocupados + 1;
+                ocupados++;
             } else if (e.getEstadoEspacio() == EstadoEspacio.DISPONIBLE) {
-                disponibles = disponibles + 1;
+                disponibles++;
             }
         }
-        lblTotalEspacios.setText(String.valueOf(total));
-        lblOcupados.setText(String.valueOf(ocupados));
-        lblDisponibles.setText(String.valueOf(disponibles));
+
+        if (lblTotalEspacios  != null) lblTotalEspacios.setText(String.valueOf(total));
+        if (lblOcupados       != null) lblOcupados.setText(String.valueOf(ocupados));
+        if (lblDisponibles    != null) lblDisponibles.setText(String.valueOf(disponibles));
     }
 
-    private void limpiarIngreso() {
-        txtPlacaIngreso.clear();
-        txtNombreConductor.clear();
-        txtIdConductor.clear();
-    }
-
-    private void mostrarMensaje(String texto, boolean ok) {
-        lblMensajeOperador.setText(texto);
-        lblMensajeOperador.getStyleClass().removeAll("mensaje-ok", "mensaje-error");
-        if (ok) {
-            lblMensajeOperador.getStyleClass().add("mensaje-ok");
-        } else {
-            lblMensajeOperador.getStyleClass().add("mensaje-error");
+    private void mostrarMensaje(String texto, boolean esOk) {
+        if (lblMensajeOperador != null) {
+            lblMensajeOperador.setText(texto);
+            lblMensajeOperador.getStyleClass().removeAll("mensaje-ok", "mensaje-error");
+            if (esOk) {
+                lblMensajeOperador.getStyleClass().add("mensaje-ok");
+            } else {
+                lblMensajeOperador.getStyleClass().add("mensaje-error");
+            }
         }
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("PARKUQ - Aviso");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }
