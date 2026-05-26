@@ -7,55 +7,73 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class AdministradorController {
 
+    // ---- Tab Espacios ----
     @FXML private TextField txtCodigoEspacio;
-    @FXML private ComboBox<TipoEspacio> cmbTipoEspacio;
+    @FXML private ComboBox<TipoEspacio>   cmbTipoEspacio;
     @FXML private ComboBox<EstadoEspacio> cmbEstadoEspacio;
-    @FXML private ListView<Espacio> listaEspacios;
+    @FXML private ListView<Espacio>       listaEspacios;
+
+    // ---- Tab Tarifas ----
     @FXML private ComboBox<TipoVehiculo> cmbTipoTarifa;
     @FXML private TextField txtValorHora;
     @FXML private TextField txtDescuento;
-    @FXML private ListView<Tarifa> listaTarifas;
+    @FXML private ListView<Tarifa>       listaTarifas;
+
+    // ---- Tab Usuarios ----
     @FXML private TextField txtNombreUsuario;
     @FXML private TextField txtIdUsuario;
     @FXML private TextField txtTelefonoUsuario;
     @FXML private TextField txtCorreoUsuario;
     @FXML private ComboBox<TipoUsuarioParqueadero> cmbTipoUsuario;
-    @FXML private ListView<UsuarioParqueadero> listaUsuarios;
+    @FXML private ListView<UsuarioParqueadero>     listaUsuarios;
+
+    // ---- Barra inferior ----
     @FXML private Label lblMensajeAdmin;
 
     private final Parqueadero parqueadero = ModelFactory.getInstancia().getParqueadero();
 
     @FXML
     public void initialize() {
+        // Llenar combos con los valores de los enums
         cmbTipoEspacio.setItems(FXCollections.observableArrayList(TipoEspacio.values()));
         cmbEstadoEspacio.setItems(FXCollections.observableArrayList(EstadoEspacio.values()));
         cmbTipoTarifa.setItems(FXCollections.observableArrayList(TipoVehiculo.values()));
         cmbTipoUsuario.setItems(FXCollections.observableArrayList(TipoUsuarioParqueadero.values()));
+
+        // Seleccionar el primero por defecto para evitar valores nulos
         cmbTipoEspacio.getSelectionModel().selectFirst();
         cmbEstadoEspacio.getSelectionModel().selectFirst();
         cmbTipoTarifa.getSelectionModel().selectFirst();
         cmbTipoUsuario.getSelectionModel().selectFirst();
+
+        // Cargar listas iniciales
         refrescarListas();
     }
+
+    // ============================================================
+    //  TAB ESPACIOS
+    // ============================================================
 
     @FXML
     protected void onAgregarEspacio(ActionEvent event) {
         String codigo = txtCodigoEspacio.getText().trim();
         if (codigo.isEmpty()) {
-            mensaje("Ingrese el código del espacio", false);
+            mensaje("Ingrese el codigo del espacio", false);
             return;
         }
-        mensaje(parqueadero.agregarEspacio(codigo, cmbTipoEspacio.getValue(), cmbEstadoEspacio.getValue()), true);
+        String respuesta = parqueadero.agregarEspacio(
+                codigo,
+                cmbTipoEspacio.getValue(),
+                cmbEstadoEspacio.getValue());
+        mensaje(respuesta, true);
+        txtCodigoEspacio.clear();
         refrescarListas();
     }
 
@@ -64,22 +82,26 @@ public class AdministradorController {
         Espacio esp = listaEspacios.getSelectionModel().getSelectedItem();
         if (esp == null) {
             mensaje("Seleccione un espacio de la lista", false);
-        } else {
-            txtCodigoEspacio.setText(esp.getCodigo());
-            cmbTipoEspacio.getSelectionModel().select(esp.getTipoEspacio());
-            cmbEstadoEspacio.getSelectionModel().select(esp.getEstadoEspacio());
-            mensaje("Espacio " + esp.getCodigo() + " cargado en el formulario", true);
+            return;
         }
+        txtCodigoEspacio.setText(esp.getCodigo());
+        cmbTipoEspacio.getSelectionModel().select(esp.getTipoEspacio());
+        cmbEstadoEspacio.getSelectionModel().select(esp.getEstadoEspacio());
+        mensaje("Espacio " + esp.getCodigo() + " cargado en el formulario", true);
     }
 
     @FXML
     protected void onModificarEspacio(ActionEvent event) {
         String codigo = txtCodigoEspacio.getText().trim();
         if (codigo.isEmpty()) {
-            mensaje("Seleccione o escriba el código del espacio", false);
+            mensaje("Escriba o seleccione el codigo del espacio", false);
             return;
         }
-        mensaje(parqueadero.modificarInformacionEspacio(codigo, cmbTipoEspacio.getValue(), cmbEstadoEspacio.getValue()), true);
+        String respuesta = parqueadero.modificarInformacionEspacio(
+                codigo,
+                cmbTipoEspacio.getValue(),
+                cmbEstadoEspacio.getValue());
+        mensaje(respuesta, true);
         refrescarListas();
     }
 
@@ -87,49 +109,68 @@ public class AdministradorController {
     protected void onDeshabilitarEspacio(ActionEvent event) {
         String codigo = txtCodigoEspacio.getText().trim();
         if (codigo.isEmpty()) {
-            mensaje("Ingrese el código del espacio", false);
+            mensaje("Ingrese el codigo del espacio a deshabilitar", false);
             return;
         }
-        mensaje(parqueadero.modificarEstadoEspacio(codigo, EstadoEspacio.FUERADESERVICIO), true);
+        String respuesta = parqueadero.modificarEstadoEspacio(codigo, EstadoEspacio.FUERADESERVICIO);
+        mensaje(respuesta, true);
         refrescarListas();
     }
+
+    // ============================================================
+    //  TAB TARIFAS
+    // ============================================================
 
     @FXML
     protected void onAgregarTarifa(ActionEvent event) {
         try {
-            double valor = Double.parseDouble(txtValorHora.getText().trim());
-            double desc = Double.parseDouble(txtDescuento.getText().trim());
-            mensaje(parqueadero.agregarTarifa(cmbTipoTarifa.getValue(), valor, desc), true);
+            double valor     = Double.parseDouble(txtValorHora.getText().trim());
+            double descuento = Double.parseDouble(txtDescuento.getText().trim());
+            String respuesta = parqueadero.agregarTarifa(cmbTipoTarifa.getValue(), valor, descuento);
+            mensaje(respuesta, true);
+            txtValorHora.clear();
+            txtDescuento.clear();
             refrescarListas();
         } catch (NumberFormatException e) {
-            mensaje("Valor por hora y descuento deben ser números", false);
+            mensaje("Valor por hora y descuento deben ser numeros validos (ej: 3000 o 5.0)", false);
         }
     }
 
     @FXML
     protected void onActualizarTarifa(ActionEvent event) {
         try {
-            double valor = Double.parseDouble(txtValorHora.getText().trim());
-            double desc = Double.parseDouble(txtDescuento.getText().trim());
-            mensaje(parqueadero.actualizarTarifa(cmbTipoTarifa.getValue(), valor, desc), true);
+            double valor     = Double.parseDouble(txtValorHora.getText().trim());
+            double descuento = Double.parseDouble(txtDescuento.getText().trim());
+            String respuesta = parqueadero.actualizarTarifa(cmbTipoTarifa.getValue(), valor, descuento);
+            mensaje(respuesta, true);
             refrescarListas();
         } catch (NumberFormatException e) {
-            mensaje("Valor por hora y descuento deben ser números", false);
+            mensaje("Valor por hora y descuento deben ser numeros validos (ej: 3000 o 5.0)", false);
         }
     }
+
+    // ============================================================
+    //  TAB USUARIOS
+    // ============================================================
 
     @FXML
     protected void onAgregarUsuario(ActionEvent event) {
         String nombre = txtNombreUsuario.getText().trim();
-        String id = txtIdUsuario.getText().trim();
+        String id     = txtIdUsuario.getText().trim();
+
         if (nombre.isEmpty() || id.isEmpty()) {
-            mensaje("Complete nombre e identificación", false);
+            mensaje("Nombre e identificacion son obligatorios", false);
             return;
         }
-        mensaje(parqueadero.registrarNuevoUsuario(nombre, id,
+
+        String respuesta = parqueadero.registrarNuevoUsuario(
+                nombre, id,
                 txtTelefonoUsuario.getText().trim(),
                 txtCorreoUsuario.getText().trim(),
-                cmbTipoUsuario.getValue()), true);
+                cmbTipoUsuario.getValue());
+
+        mensaje(respuesta, true);
+        limpiarFormularioUsuario();
         refrescarListas();
     }
 
@@ -137,14 +178,17 @@ public class AdministradorController {
     protected void onActualizarUsuario(ActionEvent event) {
         String id = txtIdUsuario.getText().trim();
         if (id.isEmpty()) {
-            mensaje("Ingrese la identificación del usuario", false);
+            mensaje("Ingrese la identificacion del usuario a actualizar", false);
             return;
         }
-        mensaje(parqueadero.actualizarInfoUsuarioParqueadero(
-                txtNombreUsuario.getText().trim(), id,
+        String respuesta = parqueadero.actualizarInfoUsuarioParqueadero(
+                txtNombreUsuario.getText().trim(),
+                id,
                 txtTelefonoUsuario.getText().trim(),
                 txtCorreoUsuario.getText().trim(),
-                cmbTipoUsuario.getValue()), true);
+                cmbTipoUsuario.getValue());
+
+        mensaje(respuesta, true);
         refrescarListas();
     }
 
@@ -152,24 +196,50 @@ public class AdministradorController {
     protected void onEliminarUsuario(ActionEvent event) {
         String id = txtIdUsuario.getText().trim();
         if (id.isEmpty()) {
-            mensaje("Ingrese la identificación a eliminar", false);
+            mensaje("Ingrese la identificacion del usuario a eliminar", false);
             return;
         }
-        mensaje(parqueadero.eliminarUsuario(id), true);
+        String respuesta = parqueadero.eliminarUsuario(id);
+        mensaje(respuesta, true);
+        limpiarFormularioUsuario();
         refrescarListas();
     }
+
+    @FXML
+    protected void onCargarUsuarioSeleccionado(ActionEvent event) {
+        UsuarioParqueadero u = listaUsuarios.getSelectionModel().getSelectedItem();
+        if (u == null) {
+            mensaje("Seleccione un usuario de la lista", false);
+            return;
+        }
+        txtNombreUsuario.setText(u.getNombre());
+        txtIdUsuario.setText(u.getIdentificacion());
+        txtTelefonoUsuario.setText(u.getTelefono());
+        txtCorreoUsuario.setText(u.getCorreo());
+        cmbTipoUsuario.getSelectionModel().select(u.getTipoUsuarioParqueadero());
+        mensaje("Usuario " + u.getNombre() + " cargado en el formulario", true);
+    }
+
+    // ============================================================
+    //  CERRAR SESION
+    // ============================================================
 
     @FXML
     protected void onCerrarSesion(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/co.edu.uniquindio.poo.parqueadero/view/Inicio.fxml"));
-        Scene scene = new Scene(loader.load(), 760, 520);
+        Scene scene = new Scene(loader.load(), 900, 560);
         VistaUtil.aplicarEstilos(scene);
+        // Tomamos la ventana a partir de listaEspacios que siempre existe
         Stage stage = (Stage) listaEspacios.getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle("PARKUQ");
         stage.centerOnScreen();
     }
+
+    // ============================================================
+    //  METODOS PRIVADOS DE APOYO
+    // ============================================================
 
     private void refrescarListas() {
         listaEspacios.setItems(FXCollections.observableArrayList(parqueadero.getListEspacios()));
@@ -177,11 +247,19 @@ public class AdministradorController {
         listaUsuarios.setItems(FXCollections.observableArrayList(parqueadero.getListUsuariosParqueaderos()));
     }
 
-    private void mensaje(String texto, boolean ok) {
+    private void limpiarFormularioUsuario() {
+        txtNombreUsuario.clear();
+        txtIdUsuario.clear();
+        txtTelefonoUsuario.clear();
+        txtCorreoUsuario.clear();
+        cmbTipoUsuario.getSelectionModel().selectFirst();
+    }
+
+    private void mensaje(String texto, boolean esOk) {
         if (lblMensajeAdmin != null) {
             lblMensajeAdmin.setText(texto);
             lblMensajeAdmin.getStyleClass().removeAll("mensaje-ok", "mensaje-error");
-            if (ok) {
+            if (esOk) {
                 lblMensajeAdmin.getStyleClass().add("mensaje-ok");
             } else {
                 lblMensajeAdmin.getStyleClass().add("mensaje-error");

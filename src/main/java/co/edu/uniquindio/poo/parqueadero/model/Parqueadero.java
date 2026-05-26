@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parqueadero {
+public class    Parqueadero {
 
     //Atributos
     private String nombre;
