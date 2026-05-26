@@ -395,6 +395,15 @@ public class    Parqueadero {
         vehiculo.setTheEspacioDelVehiculo(espacio);
     }
 
+    /**
+     * Metodo que permite asignar un espacio a un vehiculo buscandolos
+     * por su placa y codigo respectivamente, validando que ambos existan
+     * y que el espacio no este ya ocupado
+     * @param placa del vehiculo al que se le asignara el espacio
+     * @param codigoEspacio codigo del espacio a asignar
+     * @return mensaje indicando el resultado de la operacion
+     */
+
     public String asignarEspacioPorPlaca(String placa, String codigoEspacio){
         String respuesta = "";
         Vehiculo vehiculo = obtenerVehiculo(placa);
@@ -416,6 +425,13 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite vincular un usuario registrado del parqueadero con un vehiculo,
+     * buscando al usuario por su identificacion y asignandolo si existe
+     * @param vehiculo al que se le asignara el usuario
+     * @param identificacionConductor identificacion del usuario a buscar y vincular
+     */
+
     public void asignarUsuarioVehiculo(Vehiculo vehiculo, String identificacionConductor){
         UsuarioParqueadero usuario = obtenerUsuarioParqueadero(identificacionConductor);
         if(usuario != null){
@@ -423,6 +439,20 @@ public class    Parqueadero {
             usuario.asignarVehiculo(vehiculo);
         }
     }
+
+    /**
+     * Metodo que permite registrar el ingreso de un vehiculo al parqueadero,
+     * buscando un espacio disponible segun el tipo de vehiculo,
+     * creando o actualizando el vehiculo en el sistema,
+     * vinculando al usuario si existe, asignando el espacio
+     * y creando el registro del ingreso.
+     * Lanza excepcion si el vehiculo ya esta dentro o si no hay espacios disponibles
+     * @param placa del vehiculo que ingresa
+     * @param nombreConductor nombre de quien conduce
+     * @param identificacionConductor identificacion de quien conduce
+     * @param tipoVehiculo tipo del vehiculo que ingresa
+     * @return mensaje confirmando el ingreso y el espacio asignado
+     */
 
     public String registrarIngreso(String placa, String nombreConductor, String identificacionConductor, TipoVehiculo tipoVehiculo){
         String respuesta = "";
@@ -471,6 +501,15 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite calcular la cantidad de horas que estuvo un vehiculo estacionado,
+     * convirtiendo las horas y minutos a minutos totales y dividiendo entre 60.
+     * Si el resultado es menor a 1 hora, se cobra minimo 1 hora
+     * @param horaIngreso hora en que el vehiculo ingreso al parqueadero
+     * @param horaSalida hora en que el vehiculo salio del parqueadero
+     * @return cantidad de horas estacionadas, minimo 1
+     */
+
     public double calcularHoras(LocalTime horaIngreso, LocalTime horaSalida){
         int minutosIngreso = (horaIngreso.getHour() * 60) + horaIngreso.getMinute();
         int minutosSalida = (horaSalida.getHour() * 60) + horaSalida.getMinute();
@@ -483,6 +522,15 @@ public class    Parqueadero {
         }
         return horas;
     }
+
+
+    /**
+     * Metodo que permite consultar y retornar la informacion de un vehiculo
+     * buscandolo por su placa, mostrando sus datos y el espacio asignado si tiene uno.
+     * Lanza excepcion si el vehiculo no existe
+     * @param placa del vehiculo a consultar
+     * @return texto con la informacion del vehiculo
+     */
 
     public String consultarInformacionVehiculo(String placa){
         String respuesta = "";
@@ -506,6 +554,12 @@ public class    Parqueadero {
     }
 
 
+    /**
+     * Metodo que permite obtener la lista de todos los vehiculos
+     * que se encuentran actualmente dentro del parqueadero
+     * @return lista de vehiculos con estado DENTRO
+     */
+
     public List<Vehiculo> consultarVehiculosDentro(){
         List<Vehiculo> vehiculosDentro = new ArrayList<>();
         for(Vehiculo vehiculo : listVehiculos){
@@ -515,6 +569,16 @@ public class    Parqueadero {
         }
         return vehiculosDentro;
     }
+
+
+    /**
+     * Metodo que permite calcular cuanto debe pagar un vehiculo al salir,
+     * buscando su tarifa segun el tipo de vehiculo y aplicando descuento
+     * si el vehiculo pertenece a un usuario registrado del parqueadero
+     * @param vehiculo del que se quiere calcular el valor a pagar
+     * @param horas cantidad de horas que estuvo estacionado
+     * @return valor total a pagar por el tiempo estacionado
+     */
 
     public double calcularValorPagar(Vehiculo vehiculo, double horas){
         double valorPagar = 0;
@@ -529,7 +593,13 @@ public class    Parqueadero {
         return valorPagar;
     }
 
-
+    /**
+     * Metodo que permite simular cuanto le costaria la salida a un vehiculo
+     * sin registrar la salida oficialmente, calculando las horas y el valor estimado.
+     * Lanza excepcion si el vehiculo no existe o si ya salio
+     * @param placa del vehiculo a simular
+     * @return texto con el tiempo total y el valor estimado a pagar
+     */
 
     public String simularSalida(String placa){
         String respuesta = "";
@@ -549,6 +619,13 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite generar un texto con la informacion basica de un vehiculo dentro del parqueadero,
+     * mostrando la placa, el nombre del conductor y el codigo del espacio si tiene uno asignado
+     * @param vehiculo del que se quiere generar el texto
+     * @return texto con placa, conductor y espacio del vehiculo
+     */
+
     public String textoVehiculoDentro(Vehiculo vehiculo){
         String respuesta = vehiculo.getPlaca() + " - " + vehiculo.getNombreConductor();
         if(vehiculo.getTheEspacioDelVehiculo() != null){
@@ -559,6 +636,14 @@ public class    Parqueadero {
 
 
 //-----------------------------CRUD USUARIOPARQUEADERO-----------------------------------------------------------------
+
+    /**
+     * Metodo que permite buscar si un usuario del parqueadero ya esta registrado en el sistema
+     * segun su identificacion, recorriendo la lista de usuarios
+     * @param identificacion del usuario a buscar
+     * @return true si el usuario existe, false si no existe
+     */
+
     public boolean buscarUsuarioParqueadero (String identificacion) {
         boolean existe = false;
         for (UsuarioParqueadero up : listUsuariosParqueaderos) {
@@ -570,6 +655,16 @@ public class    Parqueadero {
         return existe;
     }
 
+    /**
+     * Metodo que permite registrar un nuevo usuario del parqueadero en el sistema,
+     * siempre y cuando no exista otro con la misma identificacion
+     * @param nombre del usuario a registrar
+     * @param identificacion del usuario a registrar
+     * @param telefono del usuario a registrar
+     * @param correo del usuario a registrar
+     * @param tipoUsuarioParqueadero tipo de usuario a registrar
+     * @return mensaje indicando si el usuario fue registrado o si ya existia
+     */
 
     public String registrarNuevoUsuario (String nombre, String identificacion, String telefono, String correo, TipoUsuarioParqueadero tipoUsuarioParqueadero){
         String respuesta = " ";
@@ -584,6 +679,12 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite obtener un objeto UsuarioParqueadero buscandolo por su identificacion
+     * @param identificacion del usuario a obtener
+     * @return el usuario encontrado, o null si no existe
+     */
+
     public UsuarioParqueadero obtenerUsuarioParqueadero(String identificacion){
         UsuarioParqueadero encontrado = null;
         for(UsuarioParqueadero usuario: listUsuariosParqueaderos){
@@ -595,6 +696,17 @@ public class    Parqueadero {
         return encontrado;
     }
 
+
+    /**
+     * Metodo que permite actualizar los datos de un usuario del parqueadero ya registrado,
+     * buscandolo por su identificacion y cambiando su nombre, telefono, correo y tipo
+     * @param nuevoNombre nuevo nombre del usuario
+     * @param identificacion identificacion del usuario a actualizar
+     * @param nuevoTelefono nuevo telefono del usuario
+     * @param nuevoCorreo nuevo correo del usuario
+     * @param nuevoTipoUsuarioParqueadero nuevo tipo de usuario
+     * @return mensaje indicando si fue actualizado o si no fue encontrado
+     */
 
     public String actualizarInfoUsuarioParqueadero(String nuevoNombre, String identificacion, String nuevoTelefono, String nuevoCorreo, TipoUsuarioParqueadero nuevoTipoUsuarioParqueadero){
         String respuesta;
@@ -611,6 +723,13 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite eliminar un usuario del parqueadero del sistema,
+     * buscandolo por su identificacion y removiendolo de la lista
+     * @param identificacion del usuario a eliminar
+     * @return mensaje indicando si fue eliminado o si no fue encontrado
+     */
+
     public String eliminarUsuario(String identificacion){
         String respuesta;
         UsuarioParqueadero up = obtenerUsuarioParqueadero(identificacion);
@@ -624,6 +743,13 @@ public class    Parqueadero {
     }
 
     //---------------------------------CRUD TARIFA----------------------------------------------------------------------------------
+
+    /**
+     * Metodo que permite obtener una tarifa buscandola por el tipo de vehiculo
+     * @param tipoVehiculo tipo del vehiculo del que se quiere obtener la tarifa
+     * @return la tarifa encontrada, o null si no existe
+     */
+
     public Tarifa obtenerTarifa(TipoVehiculo tipoVehiculo){
         Tarifa encontrado = null;
         for(Tarifa tarifa: listTarifas){
@@ -635,6 +761,12 @@ public class    Parqueadero {
         return encontrado;
     }
 
+    /**
+     * Metodo que permite verificar si ya existe una tarifa para un tipo de vehiculo especifico
+     * @param tipoVehiculo tipo del vehiculo a verificar
+     * @return true si ya existe una tarifa, false si no existe
+     */
+
     public boolean buscarTarifa(TipoVehiculo tipoVehiculo){
         boolean existe = false;
         Tarifa tarifa = obtenerTarifa(tipoVehiculo);
@@ -643,6 +775,16 @@ public class    Parqueadero {
         }
         return existe;
     }
+
+    /**
+     * Metodo que permite agregar una nueva tarifa al parqueadero para un tipo de vehiculo,
+     * siempre y cuando no exista ya una tarifa para ese tipo
+     * @param tipoVehiculo tipo de vehiculo al que se le asignara la tarifa
+     * @param valorPorHora valor a cobrar por hora de estacionamiento
+     * @param descuento porcentaje de descuento para usuarios registrados
+     * @return mensaje indicando si la tarifa fue registrada o si ya existia
+     */
+
 
     public String agregarTarifa(TipoVehiculo tipoVehiculo, double valorPorHora, double descuento){
         String respuesta = "";
@@ -659,6 +801,14 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite actualizar el valor por hora y el descuento
+     * de una tarifa ya existente para un tipo de vehiculo
+     * @param tipoVehiculo tipo de vehiculo cuya tarifa se quiere actualizar
+     * @param nuevoValorHora nuevo valor por hora a asignar
+     * @param nuevoDescuento nuevo porcentaje de descuento a asignar
+     * @return mensaje indicando si fue actualizada o si no fue encontrada
+     */
 
     public String actualizarTarifa(TipoVehiculo tipoVehiculo, double nuevoValorHora, double nuevoDescuento){
         String respuesta = "";
@@ -673,6 +823,12 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite generar el reporte diario del parqueadero,
+     * recorriendo todos los registros del dia, agregandolos al reporte
+     * y calculando el promedio de tiempo de estacionamiento
+     * @return objeto ReporteDiario con toda la informacion del dia actual
+     */
 
     public ReporteDiario generarReporteDiario(){
 
