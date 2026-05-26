@@ -6,7 +6,13 @@ public class Operador extends Persona implements IAutenticable {
     private final String contrasena = "123456";
 
     //Constructor
-
+    /**
+     * Constructor de la clase Operador
+     * @param nombre del operador
+     * @param identificacion del operador
+     * @param telefono del operador
+     * @param correo del operador
+     */
 
     public Operador(String nombre, String identificacion, String telefono, String correo) {
         super(nombre, identificacion, telefono, correo);

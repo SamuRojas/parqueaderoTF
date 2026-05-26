@@ -20,6 +20,7 @@ public abstract class Persona {
    * @param correo de la persona
    */
 
+
    public Persona(String nombre, String identificacion, String telefono, String correo){
       this.nombre = nombre;
       this.identificacion = identificacion;

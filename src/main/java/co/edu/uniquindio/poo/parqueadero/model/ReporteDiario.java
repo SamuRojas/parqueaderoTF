@@ -14,6 +14,11 @@ public class ReporteDiario implements IReporte {
     private List<String> listVehiculosTiempoLargo;
     private List<Registro> listRegistrosDelDia;
 
+    /**
+     * Constructor de la clase ReporteDiario
+     * @param fecha del reporte a generar
+     */
+
     public ReporteDiario(LocalDate fecha) {
         this.fecha = fecha;
         this.totalIngresos = 0;
@@ -23,7 +28,12 @@ public class ReporteDiario implements IReporte {
         this.listRegistrosDelDia = new ArrayList<>();
     }
 
-
+    /**
+     * Metodo que permite agregar un registro al reporte del dia,
+     * sumando el ingreso al total, acumulando el valor pagado y
+     * guardando la placa del vehiculo si estuvo mas de 5 horas estacionado
+     * @param registro a agregar al reporte diario
+     */
 
 
     public void agregarRegistro(Registro registro){
@@ -35,6 +45,12 @@ public class ReporteDiario implements IReporte {
         }
     }
 
+    /**
+     * Metodo que permite calcular el tiempo promedio en horas
+     * que los vehiculos estuvieron estacionados durante el dia,
+     * sumando las horas de todos los registros y dividiendo entre el total de ingresos
+     */
+
     public void calcularPromedio(){
         double suma = 0;
         for(Registro registro : listRegistrosDelDia){
@@ -44,6 +60,13 @@ public class ReporteDiario implements IReporte {
             tiempoPromedioHoras = suma / totalIngresos;
         }
     }
+
+    /**
+     * Metodo que permite generar y retornar el texto del reporte diario
+     * con la fecha, total de ingresos, dinero generado, tiempo promedio
+     * y la lista de vehiculos que estuvieron mas de 5 horas
+     * @return texto con el resumen del reporte diario
+     */
 
     public String generarTexto(){
         String texto = "";

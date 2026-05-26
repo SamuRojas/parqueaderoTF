@@ -30,6 +30,7 @@ public class    Parqueadero {
      *contructor de la clase Parqueadero
      * @param nombre del administrador
      * @param capacidadTotal del parqueadero
+     * @param tipoParqueadero tipo del parqueadero
      */
 
     public Parqueadero ( String nombre, int capacidadTotal, TipoParqueadero tipoParqueadero){
@@ -46,6 +47,13 @@ public class    Parqueadero {
 
 
     //-----------------------------CRUD ESPACIO------------------------------------------------------------------------------------------------------------------
+    /**
+     * Metodo que permite buscar si un espacio ya existe en el parqueadero
+     * segun su codigo, recorriendo la lista de espacios
+     * @param codigo del espacio a buscar
+     * @return true si el espacio existe, false si no existe
+     */
+
     public boolean buscarEspacio(String codigo){
         boolean existe = false;
         for(Espacio espacio : listEspacios){
@@ -57,6 +65,14 @@ public class    Parqueadero {
         return existe;
     }
 
+    /**
+     * Metodo que permite agregar un nuevo espacio al parqueadero,
+     * siempre y cuando no exista otro con el mismo codigo
+     * @param codigo del nuevo espacio
+     * @param tipoEspacio del nuevo espacio
+     * @param estadoEspacio del nuevo espacio
+     * @return mensaje indicando si el espacio fue registrado o si ya existia
+     */
 
     public String agregarEspacio(String codigo, TipoEspacio tipoEspacio, EstadoEspacio estadoEspacio){
         String respuesta = "";
@@ -70,6 +86,12 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite consultar todos los espacios disponibles
+     * que coincidan con el tipo de espacio indicado
+     * @param tipoEspacio tipo de espacio a buscar
+     * @return lista de espacios disponibles del tipo indicado
+     */
 
     public List<Espacio> consultarEspaciosDisponibles(TipoEspacio tipoEspacio){
         List<Espacio> espaciosDisponibles = new ArrayList<>();
@@ -81,6 +103,11 @@ public class    Parqueadero {
             return espaciosDisponibles;
     }
 
+    /**
+     * Metodo que permite obtener un objeto Espacio buscandolo por su codigo
+     * @param codigo del espacio a obtener
+     * @return el espacio encontrado, o null si no existe
+     */
 
     public Espacio obtenerEspacio(String codigo){
         Espacio encontrado = null;
@@ -93,6 +120,13 @@ public class    Parqueadero {
         return encontrado;
     }
 
+    /**
+     * Metodo que permite modificar solo el estado de un espacio,
+     * validando que no se pueda deshabilitar un espacio que esta ocupado
+     * @param codigo del espacio a modificar
+     * @param nuevoEstado estado nuevo que se quiere asignar al espacio
+     * @return mensaje indicando el resultado de la operacion
+     */
 
     public String modificarEstadoEspacio(String codigo, EstadoEspacio nuevoEstado){
         String respuesta;
@@ -112,6 +146,16 @@ public class    Parqueadero {
         return respuesta;
     }
 
+
+    /**
+     * Metodo que permite modificar tanto el tipo como el estado de un espacio,
+     * validando que el espacio no este ocupado antes de hacer cambios
+     * @param codigo del espacio a modificar
+     * @param nuevoTipoEspacio nuevo tipo a asignar al espacio
+     * @param nuevoEstadoEspacio nuevo estado a asignar al espacio
+     * @return mensaje indicando el resultado de la operacion
+     */
+
     public String modificarInformacionEspacio(String codigo, TipoEspacio nuevoTipoEspacio, EstadoEspacio nuevoEstadoEspacio){
         String respuesta = "";
         Espacio espacio = obtenerEspacio(codigo);
@@ -129,6 +173,13 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite obtener una lista con solo los codigos
+     * de los espacios disponibles para un tipo de espacio especifico
+     * @param tipoEspacio tipo de espacio a consultar
+     * @return lista de codigos de los espacios disponibles
+     */
+
     public List<String> listarCodigosEspaciosDisponibles(TipoEspacio tipoEspacio){
 
         List<String> codigos = new ArrayList<>();
@@ -142,6 +193,11 @@ public class    Parqueadero {
     }
 
 
+    /**
+     * Metodo que permite generar un texto con el detalle de todos los espacios del parqueadero,
+     * mostrando codigo, tipo, estado y la placa del vehiculo si el espacio esta ocupado
+     * @return texto con la informacion de todos los espacios
+     */
 
     public String consultarDetalleEspacios(){
         String respuesta = "";
@@ -158,6 +214,11 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite generar un resumen con la cantidad de espacios
+     * disponibles, ocupados y fuera de servicio en el parqueadero
+     * @return texto con el resumen de los estados de los espacios
+     */
 
     public String resumenEspacios(){
         int ocupados = 0;
@@ -177,6 +238,13 @@ public class    Parqueadero {
     }
     //----------------------------------CRUD VEHICULO -------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Metodo que permite buscar si un vehiculo ya existe en el parqueadero
+     * segun su placa, recorriendo la lista de vehiculos
+     * @param placa del vehiculo a buscar
+     * @return true si el vehiculo existe, false si no existe
+     */
+
      public boolean buscarVehiculo (String placa) {
          boolean existe = false;
          for (Vehiculo vh : listVehiculos) {
@@ -188,6 +256,17 @@ public class    Parqueadero {
          return existe;
      }
 
+    /**
+     * Metodo que permite registrar un vehiculo nuevo en el sistema del parqueadero,
+     * siempre y cuando no exista otro con la misma placa
+     * @param placa del vehiculo a registrar
+     * @param nombreConductor nombre de quien conduce el vehiculo
+     * @param identificacionConductor identificacion de quien conduce el vehiculo
+     * @param estadoVehiculo estado inicial del vehiculo
+     * @param horaIngreso hora en que ingresa el vehiculo
+     * @param tipoVehiculo tipo del vehiculo a registrar
+     * @return mensaje indicando si el vehiculo fue registrado o si ya existia
+     */
 
     public String registrarNuevoVehiculo(String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, LocalTime horaIngreso, TipoVehiculo tipoVehiculo) {
         String respuesta = "";
@@ -210,6 +289,12 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite obtener un objeto Vehiculo buscandolo por su placa
+     * @param placa del vehiculo a obtener
+     * @return el vehiculo encontrado, o null si no existe
+     */
+
     public Vehiculo obtenerVehiculo(String placa){
         Vehiculo encontrado = null;
         for(Vehiculo vehiculo : listVehiculos){
@@ -221,6 +306,13 @@ public class    Parqueadero {
         return encontrado;
     }
 
+    /**
+     * Metodo que permite registrar la salida de un vehiculo del parqueadero,
+     * cambiando su estado a FUERA y asignandole la hora de salida actual.
+     * Lanza excepcion si el vehiculo no existe o si ya salio
+     * @param placa del vehiculo que va a salir
+     * @return mensaje confirmando que la salida fue registrada
+     */
 
     public String registrarSalida(String placa){
         String respuesta;
@@ -237,6 +329,12 @@ public class    Parqueadero {
         return respuesta;
     }
 
+    /**
+     * Metodo que permite verificar si un vehiculo se encuentra actualmente dentro del parqueadero
+     * @param placa del vehiculo a verificar
+     * @return true si el vehiculo esta dentro, false si no esta o no existe
+     */
+
     public boolean vehiculoDentro(String placa){
         boolean estaDentro = false;
         Vehiculo vehiculo = obtenerVehiculo(placa);
@@ -247,6 +345,13 @@ public class    Parqueadero {
         }
         return estaDentro;
     }
+
+    /**
+     * Metodo que permite convertir el tipo de vehiculo en el tipo de espacio correspondiente,
+     * para saber que clase de espacio se necesita al ingresar un vehiculo
+     * @param tipoVehiculo tipo del vehiculo que ingresa
+     * @return el tipo de espacio que le corresponde al vehiculo
+     */
 
     public TipoEspacio tipoEspacioDesdeVehiculo(TipoVehiculo tipoVehiculo){
         TipoEspacio tipoEspacio = null;
@@ -259,6 +364,13 @@ public class    Parqueadero {
         return tipoEspacio;
     }
 
+    /**
+     * Metodo que permite buscar el primer espacio disponible que sea compatible
+     * con el tipo del vehiculo que quiere ingresar al parqueadero
+     * @param tipoVehiculo tipo del vehiculo para determinar que espacio necesita
+     * @return el primer espacio disponible encontrado, o null si no hay ninguno
+     */
+
     public Espacio buscarEspacioParaIngreso(TipoVehiculo tipoVehiculo){
         Espacio espacioEncontrado = null;
         TipoEspacio tipoEspacio = tipoEspacioDesdeVehiculo(tipoVehiculo);
@@ -269,6 +381,13 @@ public class    Parqueadero {
         }
         return espacioEncontrado;
     }
+
+    /**
+     * Metodo que permite asignar un espacio a un vehiculo,
+     * marcando el espacio como ocupado y vinculando ambos objetos entre si
+     * @param vehiculo al que se le va a asignar el espacio
+     * @param espacio que se le va a asignar al vehiculo
+     */
 
     public void asignarEspacioAVehiculo(Vehiculo vehiculo, Espacio espacio){
         espacio.setEstadoEspacio(EstadoEspacio.OCUPADO);

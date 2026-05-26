@@ -21,6 +21,19 @@ public class Vehiculo {
 
     //Constructor
 
+    /**
+     * Constructor de la clase Vehiculo
+     * @param placa del vehiculo
+     * @param nombreConductor del vehiculo
+     * @param identificacionConductor del vehiculo
+     * @param estadoVehiculo del vehiculo
+     * @param tipoVehiculo del vehiculo
+     * @param horaIngreso del vehiculo al parqueadero
+     * @param horaSalida del vehiculo del parqueadero
+     * @param usuarioDelVehiculo usuario registrado dueno del vehiculo
+     * @param espacioDelVehiculo espacio asignado al vehiculo
+     */
+
     public Vehiculo (String placa, String nombreConductor, String identificacionConductor, EstadoVehiculo estadoVehiculo, TipoVehiculo tipoVehiculo, LocalTime horaIngreso, LocalTime horaSalida, UsuarioParqueadero usuarioDelVehiculo, Espacio espacioDelVehiculo){
         this.placa = placa;
         this.nombreConductor = nombreConductor;

@@ -22,7 +22,6 @@ public class Administrador extends Persona implements IAutenticable {
 
     /**
      * Metodo que permite hacer login al programa al administrador validando usuario y contraseña
-     *
      * @return si lo validado es falso o verdadero
      */
 

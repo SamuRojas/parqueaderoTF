@@ -10,6 +10,7 @@ public class Espacio {
     //Relaciones
     private Vehiculo theVehiculo;
 
+
     /**
      *contructor de la clase Espacio
      * @param codigo del Espacio

@@ -11,7 +11,7 @@ public class Notificacion implements IReporte {
      *contructor de la clase Notificacion
      * @param destinatario de Notificacion
      * @param mensaje de Notificacion
-
+     * @param fechaInicio de la Notificacion
      */
 
     public Notificacion (String destinatario, String mensaje, LocalDateTime fechaInicio){

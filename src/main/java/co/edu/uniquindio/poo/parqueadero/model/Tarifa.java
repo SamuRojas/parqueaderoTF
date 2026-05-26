@@ -10,12 +10,24 @@ public class Tarifa {
     private double descuento;
 
 
+    /**
+     * Constructor de la clase Tarifa
+     * @param tipoVehiculo de Tarifa
+     * @param valorPorHora de tarifa
+     * @param descuento de tarifa
+     */
+
     public Tarifa (TipoVehiculo tipoVehiculo, double valorPorHora, double descuento){
         this.tipoVehiculo = tipoVehiculo;
         this.descuento = descuento;
         this.valorPorHora = valorPorHora;
 
     }
+
+    /**
+     * Metodo que permite calcular el valorTotal del vehiculo a pagar segun su tarifa, horas quedadas y si cuenta o no con descuento
+     * @return valorTotal ah pagar por el vehiculo
+     */
 
     public double calcularValor(double horas, boolean tieneDescuento){
         double valorTotal = horas * valorPorHora;

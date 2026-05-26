@@ -11,6 +11,16 @@ public class Registro {
     private double valorPagado;
     private double horasEstacionadas;
 
+    /**
+     * Constructor de la clase Registro
+     * @param placa del vehiculo registrado
+     * @param fecha en que se hizo el registro
+     * @param horaIngreso del vehiculo al parqueadero
+     * @param horaSalida del vehiculo del parqueadero
+     * @param valorPagado por el tiempo estacionado
+     * @param horasEstacionadas total de horas que estuvo el vehiculo
+     */
+
     public Registro(String placa, LocalDate fecha, LocalTime horaIngreso, LocalTime horaSalida, double valorPagado, double horasEstacionadas) {
         this.placa = placa;
         this.fecha = fecha;
